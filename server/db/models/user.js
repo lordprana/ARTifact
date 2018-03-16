@@ -19,6 +19,10 @@ const User = db.define('user', {
         validate: {
             isEmail: true
         }
+    },
+    facebookId: {
+        type: Sequelize.STRING,
+        allowNull: false,
     }
 
 })

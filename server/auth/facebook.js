@@ -19,14 +19,14 @@ if (!process.env.FACEBOOK_APP_ID || !process.env.FACEBOOK_APP_SECRET) {
 
   const strategy = new FacebookStrategy(facebookConfig, (token, refreshToken, profile, done) => {
     const facebookId = profile.id
-    const name = profile.displayName
+    const userName = profile.displayName
     const email = profile.emails[0].value
     // const accountType = User.ACCOUNT_TYPES.USER
 
     User.find({ where: { facebookId } })
       .then(foundUser => (foundUser
         ? done(null, foundUser)
-        : User.create({ name, email, facebookId })
+        : User.create({ userName, email, facebookId })
           .then(createdUser => done(null, createdUser))
       ))
       .catch(done);
