@@ -1,3 +1,11 @@
+/* eslint-disable class-methods-use-this */
+
+import React from 'react'
+import Expo from 'expo'
+import { Button, Alert } from 'react-native';
+
+import styles from '../styles'
+
 export default class App extends React.Component {
 
   constructor(props) {
@@ -20,17 +28,13 @@ export default class App extends React.Component {
     }
   }
   render() {
+    console.log('console test')
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
         <Button
           raised
           onPress={this.login}
           icon={{ name: 'cached' }}
-          title='LOGIN WITH FACEBOOK' />
-      </View>
+          title="LOGIN WITH FACEBOOK" />
     );
   }
 }
