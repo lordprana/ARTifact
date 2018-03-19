@@ -34,8 +34,13 @@ const createApp = () => {
   // logging middleware
   app.use(morgan('dev'));
 
+  // this route must be before body parsing middleware to take advantage of
+  // streaming the request
+  app.use('/api/identify-piece-from-plaque-image',
+    require('./api/identify-piece-from-plaque-image'));
+
   // body parsing middleware
-  app.use(bodyParser.json());
+  app.use(bodyParser.json({limit: '50mb'}));
   app.use(bodyParser.urlencoded({ extended: true }));
 
   // compression middleware
@@ -52,7 +57,7 @@ const createApp = () => {
   app.use(passport.session());
 
   // auth and api routes
-  app.use('/auth', require('./auth'));
+  // app.use('/auth', require('./auth'));
   app.use('/api', require('./api'));
 
   // static file-serving middleware
@@ -83,7 +88,7 @@ const startListening = () => {
 
   // set up our socket control center
   const io = socketio(server);
-  require('./socket')(io);
+  // require('./socket')(io);
 };
 
 const syncDb = () => db.sync();

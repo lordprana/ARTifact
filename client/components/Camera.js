@@ -30,26 +30,31 @@ export default class CameraExample extends React.Component {
   console.log(this.camera);
   if (this.camera) {
     console.log("Taking picture");
-    this.camera.takePictureAsync({base64: true})
+    let now = new Date()
+    this.camera.takePictureAsync({base64: true, quality: 0.1})
     .then(photo => {
       console.log("Took a picture");
       console.log(photo);
-      return axios.post('https://vision.googleapis.com/v1/images:annotate?key={API_KEY_HERE}', {
-        "requests": [
+      return axios.post('http://192.168.1.5:8080/api/identify-piece-from-plaque-image', {
+        requests: [
           {
-            "image": {
-              "content": exampleBase64Plaque
+            image: {
+              content: photo.base64
             },
-            "features": [
+            features: [
               {
-                "type": "TEXT_DETECTION"
+                type: 'TEXT_DETECTION'
               }
             ]
           }
         ]
       })
     })
-    .then(res => console.log(res.data));
+    .then(res => {
+      console.log('Time', new Date() - now);
+      console.log(res.data)
+    })
+    .catch(console.error.bind(console));
   }
 };
 
