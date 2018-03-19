@@ -3,8 +3,9 @@
 import React from 'react'
 import Expo from 'expo'
 import { Button, Alert } from 'react-native'
+import axios from 'axios'
 
-import styles from '../styles'
+// import styles from '../styles'
 
 export default class App extends React.Component {
 
@@ -18,13 +19,9 @@ export default class App extends React.Component {
       permissions: ['public_profile', 'email'],
     });
     if (type === 'success') {
-      // Get the user's name using Facebook's Graph API
-      const response = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}`)
-      Alert.alert(
-        'Logged in!',
-        `Hi ${(await response.json()).name}!`,
-      );
+      axios.post('http://b751f49c.ngrok.io/auth/facebook', { token })
+      .then(res => res.data)
+      .then(info => console.log(info))
     }
   }
   render() {
@@ -33,7 +30,6 @@ export default class App extends React.Component {
         <Button
           raised
           onPress={this.login}
-          icon={{ name: 'cached' }}
           title="LOGIN WITH FACEBOOK" />
     );
   }
