@@ -83,7 +83,7 @@ export default function reducer(posts = [], action) {
         return [...posts, action.post];
       case UPDATE_POST:
         return posts.map(post => {
-          return post.id === action.id ? action.post : post
+          return post.id === action.post.id ? action.post : post
         });
       case DELETE_POST:
         return posts.filter(post => {
