@@ -1,5 +1,5 @@
 const User = require('./user');
-const Post = require('./post')
+const Post = require('./post');
 
 /**
  * If we had any associations to make, this would be a great place to put them!
