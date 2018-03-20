@@ -11,7 +11,7 @@ const stockUuid = uuid => ({
 })
 
 const stockFacebookId = facebookId => ({
-  type: STOCK_UUID,
+  type: STOCK_FACEBOOK_ID,
   facebookId,
 })
 
@@ -24,21 +24,28 @@ export const getUuidFromStorage = () =>
   dispatch =>
     AsyncStorage.getItem('uuid')
     .then(uuid => {
-      console.log('uuid from storage:', uuid)
-      dispatch(stockUuid(uuid))
+      console.log('got uuid from storage:', uuid)
+      if (uuid) return dispatch(stockUuid(uuid))
     })
 
 export const setUuid = uuid =>
-  dispatch =>
+  dispatch => {
+    console.log('hello from set uuid!')
     AsyncStorage.setItem('uuid', uuid)
-    .then(() => dispatch(stockUuid(uuid)))
+    .then(() => {
+      console.log('about to dispatch...')
+      dispatch(stockUuid(uuid))
+    })
+    .catch(err => console.log('something went wrong:', err))
+    console.log('made it to bottom of function')
+  }
 
 export const getFacebookIdFromStorage = () =>
 dispatch =>
   AsyncStorage.getItem('facebookId')
   .then(facebookId => {
-    console.log('fb id from storage:', facebookId)
-    dispatch(stockFacebookId(facebookId))
+    console.log('got fb id from storage:', facebookId)
+    if (facebookId) return dispatch(stockFacebookId(facebookId))
   })
 
 export const setFacebookId = facebookId =>
@@ -73,7 +80,7 @@ const userReducer = (state = initialState, action) => {
     case STOCK_FACEBOOK_ID:
       return {
         ...state,
-        uuid: action.facebookId,
+        facebookId: action.facebookId,
       }
 
     case STOCK_USER_INFO:
@@ -88,3 +95,5 @@ const userReducer = (state = initialState, action) => {
       return state
   }
 }
+
+export default userReducer
