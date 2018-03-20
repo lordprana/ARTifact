@@ -28,11 +28,8 @@ export default class OCR extends React.Component {
 
   snap() {
     if (this.camera) {
-      let now = new Date();
       this.camera.takePictureAsync({ base64: true, quality: 0.1 })
         .then(photo => {
-          console.log('Took a picture');
-          console.log(photo);
           // TODO Add museumId at query parameter
           return axios.post(`${backEndAddress}/api/identify-piece-from-plaque-image`, {
             requests: [
