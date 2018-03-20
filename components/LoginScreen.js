@@ -2,13 +2,16 @@ import React from 'react'
 import { Text, View } from 'react-native'
 import styles from '../styles'
 import LoginButton from './LoginButton'
+import BackgroundImage from './BackgroundImage'
 
 const LoginScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text>Welcome to ARTifact</Text>
-      <LoginButton />
-    </View>
+    <BackgroundImage image={require('../londonMuseum.jpg')}>
+      <View style={styles.container}>
+        <Text style={styles.titleText}>Welcome to ARTifact</Text>
+        <LoginButton />
+      </View>
+    </BackgroundImage>
   )
 }
 

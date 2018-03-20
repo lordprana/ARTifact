@@ -107,7 +107,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         name: action.info.userName,
         email: action.info.email,
-        pictureUrl: action.info.facebookPic,
+        pictureUrl: action.info.facebookPicUrl,
       }
 
     default:

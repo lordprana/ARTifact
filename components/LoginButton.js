@@ -3,15 +3,14 @@ import Expo from 'expo'
 import { Button, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { loginWithToken } from '../store/user'
-
-// import styles from '../styles'
+import { appId } from '../config'
 
 const LoginButton = props => {
 
   async function facebookLogin() {
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('2009994855934003', {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(appId, {
       permissions: ['public_profile', 'email'],
-    });
+    })
     if (type === 'success') {
       props.loginWithToken(token)
     } else {
