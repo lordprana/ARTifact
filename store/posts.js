@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import backEndAddress from './index'
+import { backEndAddress } from '../config';
 
 const GET_ALL = 'GET_POSTS'
 const CREATE_POST = 'CREATE_POST';

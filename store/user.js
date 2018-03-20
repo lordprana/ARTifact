@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native'
 import axios from 'axios'
+import { backEndAddress } from '../config'
 
 const STOCK_UUID = 'STOCK_UUID'
 const STOCK_FACEBOOK_ID = 'STOCK_FACEBOOK_ID'
@@ -24,29 +25,36 @@ export const getUuidFromStorage = () =>
   dispatch =>
     AsyncStorage.getItem('uuid')
     .then(uuid => {
-      console.log('got uuid from storage:', uuid)
-      if (uuid) return dispatch(stockUuid(uuid))
+      if (uuid) {
+        dispatch(stockUuid(uuid))
+        return uuid
+      } else {
+        return null
+      }
     })
+    .catch(() => null)
 
 export const setUuid = uuid =>
   dispatch => {
-    console.log('hello from set uuid!')
     AsyncStorage.setItem('uuid', uuid)
     .then(() => {
-      console.log('about to dispatch...')
       dispatch(stockUuid(uuid))
     })
-    .catch(err => console.log('something went wrong:', err))
-    console.log('made it to bottom of function')
+    .catch(err => console.log(`can't set AsyncStorage`, err))
   }
 
 export const getFacebookIdFromStorage = () =>
 dispatch =>
   AsyncStorage.getItem('facebookId')
   .then(facebookId => {
-    console.log('got fb id from storage:', facebookId)
-    if (facebookId) return dispatch(stockFacebookId(facebookId))
+    if (facebookId) {
+      dispatch(stockFacebookId(facebookId))
+      return facebookId
+    } else {
+      return null
+    }
   })
+  .catch(() => null)
 
 export const setFacebookId = facebookId =>
 dispatch =>
@@ -55,8 +63,19 @@ dispatch =>
 
 export const getUserInfo = facebookId =>
   dispatch =>
-    axios.get(`api/users/${facebookId}`)
+    axios.get(`${backEndAddress}/api/users/${facebookId}`)
+    .then(res => res.data)
     .then(info => dispatch(stockUserInfo(info)))
+
+export const loginWithToken = token =>
+  dispatch =>
+    axios.post(`${backEndAddress}/auth/facebook`, { token })
+    .then(res => res.data)
+    .then(info => {
+      dispatch(setUuid(info.uuid))
+      dispatch(setFacebookId(info.facebookId))
+      dispatch(stockUserInfo(info))
+    })
 
 
 const initialState = {
