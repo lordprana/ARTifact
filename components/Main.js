@@ -39,3 +39,10 @@ export default class App extends React.Component {
     return <Stack />
   }
 }
+
+const styles = StyleSheet.create({
+  view: {
+    backgroundColor: 'powderblue',
+    paddingTop: 10
+  }
+})
