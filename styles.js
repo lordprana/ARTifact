@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { Constants } from 'expo';
 
 const styles = StyleSheet.create({
@@ -42,6 +42,14 @@ const styles = StyleSheet.create({
   },
   disambiguateText: {
     fontSize: 20
+  },
+  loadingImage: {
+    height: Dimensions.get('screen').height,
+    position: 'absolute'
+  },
+  loadingText: {
+    fontSize: 40,
+    color: 'white'
   }
 
 });
