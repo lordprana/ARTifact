@@ -3,11 +3,13 @@ import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera, Permissions } from 'expo';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import styles from '../styles';
 import { backEndAddress } from '../config';
+import { stockPiece, getPosts } from '../store';
 
 
-export default class OCR extends React.Component {
+class OCR extends React.Component {
   constructor() {
     super();
 
@@ -28,8 +30,10 @@ export default class OCR extends React.Component {
 
   snap() {
     if (this.camera) {
+      console.log('Taking photo');
       this.camera.takePictureAsync({ base64: true, quality: 0.1 })
         .then(photo => {
+          console.log('Took photo');
           // TODO Add museumId at query parameter
           return axios.post(`${backEndAddress}/api/identify-piece-from-plaque-image`, {
             requests: [
@@ -47,7 +51,16 @@ export default class OCR extends React.Component {
           });
         })
         .then(res => {
-          // TODO Add navigation to Piece forum here
+          console.log(res.data);
+          if (res.data.length > 1){
+            // TODO Add navigation to disambiguatepicker here
+          } else if (res.data.length === 1) {
+            const piece = res.data[0];
+            this.props.stockPosts(piece.posts);
+            delete piece.posts;
+            this.props.stockPiece(piece);
+            // TODO Add navigation to Piece forum here
+          }
         })
         .catch(console.error.bind(console));
     }
@@ -91,3 +104,10 @@ export default class OCR extends React.Component {
     }
   }
 }
+
+const mapDispatch = dispatch => ({
+  stockPiece: piece => dispatch(stockPiece(piece)),
+  stockPosts: posts => dispatch(getPosts(posts))
+});
+
+export default connect(null, mapDispatch)(OCR);
