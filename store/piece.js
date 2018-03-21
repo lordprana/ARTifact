@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const STOCK_PIECE = 'STOCK_PIECE';
 
-const stockPiece = (piece) => {
+export const stockPiece = (piece) => {
     return {
         type: STOCK_PIECE,
         piece
