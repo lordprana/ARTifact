@@ -28,7 +28,7 @@ export default class LoadingScreen extends React.Component {
   }
 
   componentDidMount() {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState({activeImage:
         (this.state.activeImage + 1) % this.images.length});
 
@@ -56,9 +56,17 @@ export default class LoadingScreen extends React.Component {
     }, 4000);
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   render() {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <View style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        }}>
         {this.images.map((image, i) => (
           <Animated.Image
             key={image}
