@@ -9,9 +9,9 @@ import LoginScreen from './LoginScreen'
 class App extends React.Component {
 
   componentDidMount() {
-    Promise.all([this.props.getFacebookIdFromStorage(), this.props.getUuidFromStorage()])
-    .then(([facebookId, uuid]) => {
-      if (facebookId) this.props.getUserInfo(facebookId)
+    this.props.getUuidFromStorage()
+    .then(result => {
+      if (result) this.props.getUserInfo()
     })
   }
 
@@ -39,7 +39,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getFacebookIdFromStorage: () => dispatch(getFacebookIdFromStorage()),
   getUuidFromStorage: () => dispatch(getUuidFromStorage()),
-  getUserInfo: facebookId => dispatch(getUserInfo(facebookId)),
+  getUserInfo: () => dispatch(getUserInfo()),
 })
 
 export default connect(mapState, mapDispatch)(App)
