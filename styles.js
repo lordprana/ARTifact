@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { Constants } from 'expo';
 
 const styles = StyleSheet.create({
@@ -70,6 +70,36 @@ const styles = StyleSheet.create({
   },
   disambiguateText: {
     fontSize: 20
+  },
+  loadingImage: {
+    height: Dimensions.get('screen').height,
+    position: 'absolute'
+  },
+  loadingText: {
+    fontSize: 40,
+    color: 'white'
+  },
+  ocrCamera: {
+    height: Dimensions.get('screen').height,
+    position: 'absolute'
+  },
+  noneIdentifiedBackground: {
+    backgroundColor: '#4286f4',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  noneIdentifiedText: {
+    fontSize: 30,
+    color: 'white',
+    textAlign: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 40
+  },
+  noneIdentifiedIcon: {
+    height: 36,
+    width: 36
   }
 
 });
