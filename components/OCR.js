@@ -8,6 +8,7 @@ import styles from '../styles';
 import { backEndAddress } from '../config';
 import { stockPiece, getPosts } from '../store';
 import LoadingScreen from './LoadingScreen';
+import DisambiguatePicker from './DisambiguatePicker';
 
 
 class OCR extends React.Component {
@@ -57,15 +58,17 @@ class OCR extends React.Component {
           console.log(res.data);
           this.setState({loading: false});
           if (res.data.length > 1){
-            // TODO Add navigation to disambiguatepicker here
+            this.props.navigation.navigate('DisambiguatePicker', {pieces: res.data})
           } else if (res.data.length === 1) {
             const piece = res.data[0];
             this.props.stockPosts(piece.posts);
             delete piece.posts;
             this.props.stockPiece(piece);
             // TODO Add navigation to Piece forum here
+            //this.props.navigation.navigate('fakeForum');
           } else {
             // TODO Navigate to NoneIdentified component
+            //this.props.navigation.navigate('NoneIdentified');
           }
         })
         .catch(console.error.bind(console));

@@ -12,22 +12,31 @@ class DisambiguatePicker extends React.Component {
     this._onPress = this._onPress.bind(this);
   }
 
-  _onPress(piece) {
-    return function() {
-      console.log(this);
-      this.props.stockPosts(piece.posts);
-      delete piece.posts;
-      this.props.stockPiece(piece);
-      // navigate to forum
-    }.bind(this);
+  // _onPress(piece) {
+  //   console.log('PIECE', piece);
+  //   return () => {
+  //     // console.log(this);
+  //     // this.props.stockPosts(piece.posts);
+  //     // delete piece.posts;
+  //     // this.props.stockPiece(piece);
+  //     console.log("PROPS:", this.props)
+  //     // this.props.navigation.navigate('fakeForum');
+  //   };
+  // }
+
+  _onPress() {
+      console.log("PROPS:", this.props)
   }
 
   render() {
+    const pieces = this.props.navigation.state.params.pieces;
     return (
       <ScrollView style={styles.disambiguateContainer}>
         <Text style={styles.disambiguateTitle}>Choose a piece</Text>
-        { this.props.pieces.map(piece => (
-          <TouchableOpacity onPress={this._onPress(piece)} >
+        {pieces.map(piece => (
+          <TouchableOpacity
+            key={piece.id}
+            onPress={this._onPress} >
             <View style={styles.disambiguateItem}>
               <Text
                 style={styles.disambiguateText}

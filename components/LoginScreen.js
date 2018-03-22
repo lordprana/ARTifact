@@ -50,7 +50,7 @@ const mapState = state => ({
   pictureUrl: state.user.pictureUrl
 })
 const mapDispatch = dispatch => ({
-  getFacebookIdFromStorage: () => dispatch(getFacebookIdFromStorage()),
+  // getFacebookIdFromStorage: () => dispatch(getFacebookIdFromStorage()),
   getUuidFromStorage: () => dispatch(getUuidFromStorage()),
   getUserInfo: () => dispatch(getUserInfo()),
 })

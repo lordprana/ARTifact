@@ -5,6 +5,8 @@ import LoginScreen from './LoginScreen';
 import fakeForum from './fakeForum';
 import fakeMuseum from './fakeMuseum';
 import swiper from './swiper';
+import DisambiguatePicker from './DisambiguatePicker';
+import Noneidentified from './NoneIdentified';
 // remove stacknavigator museum screen.
 const Stack = StackNavigator({
   LoginScreen: {
@@ -16,8 +18,11 @@ const Stack = StackNavigator({
   fakeForum: {
     screen: fakeForum
   },
-  fakeMuseum: {
-    screen: fakeMuseum
+  DisambiguatePicker: {
+    screen: DisambiguatePicker
+  },
+  NoneIdentified: {
+    screen: Noneidentified
   }
 },
   {

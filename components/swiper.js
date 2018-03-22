@@ -36,8 +36,8 @@ export default class FakeCam extends React.Component {
           <View style={this.viewStyle()}>
             <FakeMuseum />
           </View>
-            <View style={this.viewStyle()}>
-              <OCR />
+            <View >
+              <OCR navigation={this.props.navigation} />
             </View>
           <View style={this.viewStyle()}>
             <FakeUser />
