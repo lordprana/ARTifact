@@ -66,6 +66,7 @@ export default class LoadingScreen extends React.Component {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'white'
         }}>
         {this.images.map((image, i) => (
           <Animated.Image
