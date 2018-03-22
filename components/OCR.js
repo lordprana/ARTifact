@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { Camera, Permissions } from 'expo';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -76,7 +76,7 @@ class OCR extends React.Component {
       return (
         <View style={{ flex: 1 }}>
           <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => {this.camera = ref;}} >
-            <Text>
+            <Text style={styles.ocrText}>
               Take a picture of the art plaque to join the conversation about the piece
             </Text>
             <View
@@ -86,16 +86,13 @@ class OCR extends React.Component {
                 flexDirection: 'row',
               }}>
               <TouchableOpacity
-                style={{
-                  flex: 0.1,
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                }}
+                style={styles.ocrButton}
                 onPress={this.snap}>
-                <Text
-                  style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
-                  {' '}Photo{' '}
-                </Text>
+                <View style={styles.ocrButtonBackground}>
+                  <Image style={styles.ocrButtonIcon}
+                    source={require('../resources/icons/photo-camera.png')}
+                  />
+                </View>
               </TouchableOpacity>
             </View>
           </Camera>
