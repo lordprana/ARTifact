@@ -54,6 +54,24 @@ const styles = StyleSheet.create({
   ocrCamera: {
     height: Dimensions.get('screen').height,
     position: 'absolute'
+  },
+  noneIdentifiedBackground: {
+    backgroundColor: '#4286f4',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  noneIdentifiedText: {
+    fontSize: 30,
+    color: 'white',
+    textAlign: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 40
+  },
+  noneIdentifiedIcon: {
+    height: 36,
+    width: 36
   }
 
 });
