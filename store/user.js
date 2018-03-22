@@ -62,6 +62,7 @@ export const loginWithToken = token =>
 
 
 const initialState = {
+  id: null,
   facebookId: null,
   uuid: null,
   name: null,
@@ -82,10 +83,11 @@ const userReducer = (state = initialState, action) => {
     case STOCK_USER_INFO:
       return {
         ...state,
+        id: action.info.id,
         name: action.info.userName,
         email: action.info.email,
         pictureUrl: action.info.facebookPicUrl,
-        facebookId: action.facebookId,
+        facebookId: action.info.facebookId,
       }
 
     default:
