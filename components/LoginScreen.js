@@ -32,7 +32,7 @@ class Auth extends React.Component {
       return (<LoginScreen />)
     } else {
     return (
-      this.props.navigation.navigate('fakeMuseum')
+      this.props.navigation.navigate('swiper')
       // <View style={styles.container}>
       //   <Text>Welcome {this.props.name}</Text>
       //   <Image

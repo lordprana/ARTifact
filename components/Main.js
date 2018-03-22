@@ -3,7 +3,9 @@ import { Text, View, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from './LoginScreen';
 import fakeForum from './fakeForum';
+import fakeMuseum from './fakeMuseum';
 import swiper from './swiper';
+// remove stacknavigator museum screen.
 const Stack = StackNavigator({
   LoginScreen: {
     screen: LoginScreen,
@@ -12,7 +14,10 @@ const Stack = StackNavigator({
     screen: swiper
   },
   fakeForum: {
-    screen: fakeForum,
+    screen: fakeForum
+  },
+  fakeMuseum: {
+    screen: fakeMuseum
   }
 },
   {

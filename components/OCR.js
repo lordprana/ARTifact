@@ -1,12 +1,13 @@
 import React from 'react';
 
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { Camera, Permissions } from 'expo';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import styles from '../styles';
 import { backEndAddress } from '../config';
 import { stockPiece, getPosts } from '../store';
+import LoadingScreen from './LoadingScreen';
 
 
 class OCR extends React.Component {
@@ -16,6 +17,7 @@ class OCR extends React.Component {
     this.state = {
       hasCameraPermission: null,
       type: Camera.Constants.Type.back,
+      loading: false
     };
 
     this.camera = null;
@@ -31,6 +33,7 @@ class OCR extends React.Component {
   snap() {
     if (this.camera) {
       console.log('Taking photo');
+      this.setState({loading: true});
       this.camera.takePictureAsync({ base64: true, quality: 0.1 })
         .then(photo => {
           console.log('Took photo');
@@ -52,6 +55,7 @@ class OCR extends React.Component {
         })
         .then(res => {
           console.log(res.data);
+          this.setState({loading: false});
           if (res.data.length > 1){
             // TODO Add navigation to disambiguatepicker here
           } else if (res.data.length === 1) {
@@ -60,6 +64,8 @@ class OCR extends React.Component {
             delete piece.posts;
             this.props.stockPiece(piece);
             // TODO Add navigation to Piece forum here
+          } else {
+            // TODO Navigate to NoneIdentified component
           }
         })
         .catch(console.error.bind(console));
@@ -75,8 +81,8 @@ class OCR extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Camera style={{ flex: 1 }} type={this.state.type} ref={ref => {this.camera = ref;}} >
-            <Text>
+          <Camera style={styles.ocrCamera} type={this.state.type} ref={ref => {this.camera = ref;}} >
+            <Text style={styles.ocrText}>>
               Take a picture of the art plaque to join the conversation about the piece
             </Text>
             <View
@@ -86,19 +92,19 @@ class OCR extends React.Component {
                 flexDirection: 'row',
               }}>
               <TouchableOpacity
-                style={{
-                  flex: 0.1,
-                  alignSelf: 'flex-end',
-                  alignItems: 'center',
-                }}
+                style={styles.ocrButton}
                 onPress={this.snap}>
-                <Text
-                  style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
-                  {' '}Photo{' '}
-                </Text>
+                <View style={styles.ocrButtonBackground}>
+                  <Image style={styles.ocrButtonIcon}
+                    source={require('../resources/icons/photo-camera.png')}
+                  />
+                </View>
               </TouchableOpacity>
             </View>
           </Camera>
+          {
+            this.state.loading && <LoadingScreen />
+          }
         </View>
       );
     }
