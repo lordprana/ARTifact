@@ -2,19 +2,18 @@ import { AsyncStorage } from 'react-native'
 import axios from 'axios'
 import { backEndAddress } from '../config'
 
+const setAxiosHeaders = uuid => {axios.defaults.headers.common.Authorization = `Bearer ${uuid}`}
+
 const STOCK_UUID = 'STOCK_UUID'
-const STOCK_FACEBOOK_ID = 'STOCK_FACEBOOK_ID'
 const STOCK_USER_INFO = 'STOCK_USER_INFO'
 
-const stockUuid = uuid => ({
-  type: STOCK_UUID,
-  uuid,
-})
-
-const stockFacebookId = facebookId => ({
-  type: STOCK_FACEBOOK_ID,
-  facebookId,
-})
+const stockUuid = uuid => {
+  setAxiosHeaders(uuid)
+  return {
+    type: STOCK_UUID,
+    uuid,
+  }
+}
 
 export const stockUserInfo = info => ({
   type: STOCK_USER_INFO,
@@ -26,8 +25,7 @@ export const getUuidFromStorage = () =>
     AsyncStorage.getItem('uuid')
     .then(uuid => {
       if (uuid) {
-        dispatch(stockUuid(uuid))
-        return uuid
+        return dispatch(stockUuid(uuid))
       } else {
         return null
       }
@@ -43,29 +41,15 @@ export const setUuid = uuid =>
     .catch(err => console.log(`can't set AsyncStorage`, err))
   }
 
-export const getFacebookIdFromStorage = () =>
-dispatch =>
-  AsyncStorage.getItem('facebookId')
-  .then(facebookId => {
-    if (facebookId) {
-      dispatch(stockFacebookId(facebookId))
-      return facebookId
-    } else {
-      return null
+export const getUserInfo = () =>
+  dispatch => {
+    if (!axios.defaults.headers.common.Authorization.startsWith('Bearer')) {
+      console.error('auth header not set')
     }
-  })
-  .catch(() => null)
-
-export const setFacebookId = facebookId =>
-dispatch =>
-  AsyncStorage.setItem('facebookId', facebookId)
-  .then(() => dispatch(stockFacebookId(facebookId)))
-
-export const getUserInfo = facebookId =>
-  dispatch =>
-    axios.get(`${backEndAddress}/api/users/${facebookId}`)
+    axios.get(`${backEndAddress}/api/users/me`)
     .then(res => res.data)
     .then(info => dispatch(stockUserInfo(info)))
+  }
 
 export const loginWithToken = token =>
   dispatch =>
@@ -73,12 +57,12 @@ export const loginWithToken = token =>
     .then(res => res.data)
     .then(info => {
       dispatch(setUuid(info.uuid))
-      dispatch(setFacebookId(info.facebookId))
       dispatch(stockUserInfo(info))
     })
 
 
 const initialState = {
+  id: null,
   facebookId: null,
   uuid: null,
   name: null,
@@ -96,18 +80,14 @@ const userReducer = (state = initialState, action) => {
         uuid: action.uuid,
       }
 
-    case STOCK_FACEBOOK_ID:
-      return {
-        ...state,
-        facebookId: action.facebookId,
-      }
-
     case STOCK_USER_INFO:
       return {
         ...state,
+        id: action.info.id,
         name: action.info.userName,
         email: action.info.email,
         pictureUrl: action.info.facebookPicUrl,
+        facebookId: action.info.facebookId,
       }
 
     default:

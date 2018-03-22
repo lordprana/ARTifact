@@ -31,14 +31,14 @@ render() {
     return (<LoginScreen />)
   } else {
   return (
-    // this.props.navigation.navigate('swiper')
-    <View style={styles.container}>
-      <Text>Welcome {this.props.name}</Text>
-      <Image
-        style={{width: 50, height: 50}}
-        source={{uri: this.props.pictureUrl}}
-        />
-    </View>
+    this.props.navigation.navigate('fakeMuseum')
+    // <View style={styles.container}>
+    //   <Text>Welcome {this.props.name}</Text>
+    //   <Image //cannot find image
+    //     style={{width: 50, height: 50}}
+    //     source={{uri: this.props.pictureUrl}}
+    //     />
+    // </View>
   )}
 }
 }
