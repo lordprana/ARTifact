@@ -4,6 +4,7 @@ import styles from '../styles'
 import LoginButton from './LoginButton'
 import BackgroundImage from './BackgroundImage'
 import { connect } from 'react-redux';
+// import { StackNavigator } from 'react-navigation';
 import { getFacebookIdFromStorage, getUuidFromStorage, getUserInfo } from '../store/user'
 
 const LoginScreen = () => {
@@ -30,14 +31,14 @@ render() {
     return (<LoginScreen />)
   } else { //this.props.navigate. to swiper, initially fake cam
   return (
-    this.props.navigation.navigate('fakeCamera')
-    // <View style={styles.container}>
-    //   <Text>Welcome {this.props.name}</Text>
-    //   <Image
-    //     style={{width: 50, height: 50}}
-    //     source={{uri: this.props.pictureUrl}}
-    //     />
-    // </View>
+    // this.props.navigation.navigate('fakeCamera')
+    <View style={styles.container}>
+      <Text>Welcome {this.props.name}</Text>
+      <Image
+        style={{width: 50, height: 50}}
+        source={{uri: this.props.pictureUrl}}
+        />
+    </View>
   )}
 }
 }

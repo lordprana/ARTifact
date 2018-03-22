@@ -17,7 +17,8 @@ const Stack = StackNavigator({
   }
 },
   {
-    initialRouteName: 'LoginScreen'
+    initialRouteName: 'LoginScreen',
+    headerMode: 'none'
   }
 )
 export default class App extends React.Component {
