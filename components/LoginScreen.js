@@ -29,9 +29,9 @@ componentDidMount() {
 render() {
   if (!this.props.uuid) {
     return (<LoginScreen />)
-  } else { //this.props.navigate. to swiper, initially fake cam
+  } else {
   return (
-    // this.props.navigation.navigate('fakeCamera')
+    // this.props.navigation.navigate('swiper')
     <View style={styles.container}>
       <Text>Welcome {this.props.name}</Text>
       <Image

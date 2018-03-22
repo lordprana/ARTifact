@@ -4,13 +4,13 @@ import styles from '../styles';
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from './LoginScreen';
 import fakeForum from './fakeForum';
-import fakeCamera from './fakeCamera';
+import swiper from './swiper';
 const Stack = StackNavigator({
   LoginScreen: {
     screen: LoginScreen,
   },
-  fakeCamera: {
-    screen: fakeCamera
+  swiper: {
+    screen: swiper
   },
   fakeForum: {
     screen: fakeForum,
