@@ -5,7 +5,7 @@ import LoginButton from './LoginButton'
 import BackgroundImage from './BackgroundImage'
 import { connect } from 'react-redux';
 // import { StackNavigator } from 'react-navigation';
-import { getFacebookIdFromStorage, getUuidFromStorage, getUserInfo } from '../store/user'
+import { getUuidFromStorage, getUserInfo } from '../store/user'
 
 const LoginScreen = () => {
   return (
@@ -19,41 +19,43 @@ const LoginScreen = () => {
 }
 
 class Auth extends React.Component {
-componentDidMount() {
-  Promise.all([this.props.getFacebookIdFromStorage(), this.props.getUuidFromStorage()])
-  .then(([facebookId, uuid]) => {
-    if (facebookId) this.props.getUserInfo(facebookId)
-  })
-}
 
-render() {
-  if (!this.props.uuid) {
-    return (<LoginScreen />)
-  } else {
-  return (
-    this.props.navigation.navigate('fakeMuseum')
-    // <View style={styles.container}>
-    //   <Text>Welcome {this.props.name}</Text>
-    //   <Image //cannot find image
-    //     style={{width: 50, height: 50}}
-    //     source={{uri: this.props.pictureUrl}}
-    //     />
-    // </View>
-  )}
-}
+  componentDidMount() {
+    this.props.getUuidFromStorage()
+    .then(result => {
+      if (result) this.props.getUserInfo()
+    })
+  }
+
+  render() {
+    if (!this.props.uuid) {
+      return (<LoginScreen />)
+    } else {
+    return (
+      this.props.navigation.navigate('fakeMuseum')
+      // <View style={styles.container}>
+      //   <Text>Welcome {this.props.name}</Text>
+      //   <Image
+      //     style={{width: 50, height: 50}}
+      //     source={{uri: this.props.pictureUrl}}
+      //     />
+      // </View>
+    )}
+  }
 }
 
 const mapState = state => ({
-uuid: state.user.uuid,
-name: state.user.name,
-pictureUrl: state.user.pictureUrl
+  uuid: state.user.uuid,
+  name: state.user.name,
+  pictureUrl: state.user.pictureUrl
 })
 const mapDispatch = dispatch => ({
-getFacebookIdFromStorage: () => dispatch(getFacebookIdFromStorage()),
-getUuidFromStorage: () => dispatch(getUuidFromStorage()),
-getUserInfo: facebookId => dispatch(getUserInfo(facebookId)),
+  getFacebookIdFromStorage: () => dispatch(getFacebookIdFromStorage()),
+  getUuidFromStorage: () => dispatch(getUuidFromStorage()),
+  getUserInfo: () => dispatch(getUserInfo()),
 })
 
 export default connect(mapState, mapDispatch)(Auth)
 
 // export default LoginScreen
+
