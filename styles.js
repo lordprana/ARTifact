@@ -50,6 +50,10 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 40,
     color: 'white'
+  },
+  ocrCamera: {
+    height: Dimensions.get('screen').height,
+    position: 'absolute'
   }
 
 });
