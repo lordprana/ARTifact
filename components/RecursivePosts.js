@@ -71,8 +71,6 @@ class RecursivePosts extends React.Component{
 }
 }
 
-export default RecursivePosts
-
 const styles = StyleSheet.create({
     mainView: {
         paddingLeft: 10
@@ -110,3 +108,9 @@ const styles = StyleSheet.create({
     ]    
   }
 });
+
+const mapDispatch = dispatch => ({
+  fetchPosts: () => dispatch(fetchPosts()),
+})
+
+export default connect(null, mapDispatch)(RecursivePosts)

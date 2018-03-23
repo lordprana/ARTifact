@@ -2,7 +2,7 @@ import React from 'react';
 import Swiper from 'react-native-swiper';
 import randomcolor from 'randomcolor';
 import { View, Text } from 'react-native';
-import FakeMuseum from './fakeMuseum';
+import MuseumPage from './MuseumPage';
 import FakeUser from './fakeUser';
 import OCR from './OCR';
 class TitleText extends React.Component {
@@ -34,7 +34,7 @@ export default class FakeCam extends React.Component {
           showsPagination={true}
           index={1}>
           <View style={this.viewStyle()}>
-            <FakeMuseum />
+            <MuseumPage />
           </View>
             <View >
               <OCR navigation={this.props.navigation} />

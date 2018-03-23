@@ -87,11 +87,10 @@ const styles = StyleSheet.create({
     }
 })
 
-// mapState = null
 
-// const mapDispatch = (dispatch, ownProps) => ({
-//     addPost: (post) => 
-//         dispatch(addPost(post))
-// })
+const mapDispatch = (dispatch, ownProps) => ({
+    addPost: (post) => 
+        dispatch(addPost(post))
+})
 
-export default CreatePost;
+export default connect(null, mapDispatch)(CreatePost)
