@@ -27,7 +27,9 @@ class DisambiguatePicker extends React.Component {
       <ScrollView style={styles.disambiguateContainer}>
         <Text style={styles.disambiguateTitle}>Choose a piece</Text>
         { this.props.pieces.map(piece => (
-          <TouchableOpacity onPress={this._onPress(piece)} >
+          <TouchableOpacity
+            key={piece.id}
+            onPress={this._onPress(piece)} >
             <View style={styles.disambiguateItem}>
               <Text
                 style={styles.disambiguateText}
@@ -39,7 +41,7 @@ class DisambiguatePicker extends React.Component {
           </TouchableOpacity>
         ))}
       </ScrollView>
-    )
+    );
   }
 }
 
