@@ -46,7 +46,7 @@ export const getUserInfo = () =>
     if (!axios.defaults.headers.common.Authorization.startsWith('Bearer')) {
       console.error('auth header not set')
     }
-    axios.get(`${backEndAddress}/api/users/me`)
+    return axios.get(`${backEndAddress}/api/users/me`)
     .then(res => res.data)
     .then(info => dispatch(stockUserInfo(info)))
   }
