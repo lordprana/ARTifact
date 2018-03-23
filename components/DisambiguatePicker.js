@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import styles from '../styles';
 import { stockPiece, getPosts } from '../store';
 
@@ -17,7 +18,24 @@ class DisambiguatePicker extends React.Component {
       this.props.stockPosts(piece.posts);
       delete piece.posts;
       this.props.stockPiece(piece);
-      this.props.navigation.navigate('fakeForum');
+      this.props.navigation.dispatch(
+        NavigationActions.reset(
+          {
+            index: 1,
+            actions: [
+              NavigationActions.navigate(
+                {
+                  routeName: 'swiper'
+                }
+              ),
+              NavigationActions.navigate(
+                {
+                  routeName: 'fakeForum',
+                }
+              )
+            ]
+          })
+      );
     }.bind(this);
   }
 
