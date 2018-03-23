@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getFacebookIdFromStorage, getUuidFromStorage, getUserInfo } from '../store/user'
 
 import LoginScreen from './LoginScreen'
+import MuseumPage from './MuseumPage'
 
 class App extends React.Component {
 
@@ -20,13 +21,7 @@ class App extends React.Component {
       return (<LoginScreen />)
     } else {
     return (
-      <View style={styles.container}>
-        <Text>Welcome {this.props.name}</Text>
-        <Image
-          style={{width: 50, height: 50}}
-          source={{uri: this.props.pictureUrl}}
-          />
-      </View>
+      <MuseumPage />
     )}
   }
 }
