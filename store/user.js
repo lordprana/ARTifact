@@ -85,7 +85,7 @@ export const getUserInfo = () =>
     axios.get(`${backEndAddress}/api/users/me`)
     .then(res => res.data)
     .then(info => dispatch(stockUserInfo(info)))
-    .catch(() => dispatch(stockUserInfo(null)));
+    .catch(() => dispatch(setUuid('')));
   };
 
 export const loginWithToken = token =>
