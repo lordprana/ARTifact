@@ -142,7 +142,7 @@ class OCR extends React.Component {
       return (
         <View style={{ flex: 1 }}>
           <Camera style={styles.ocrCamera} type={this.state.type} ref={ref => {this.camera = ref;}} >
-            <Text style={styles.ocrText}>>
+            <Text style={styles.ocrText}>
               Take a picture of the art plaque to join the conversation about the piece
             </Text>
             <View
