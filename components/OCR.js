@@ -70,6 +70,7 @@ class OCR extends React.Component {
           }
         })
         .catch(console.error.bind(console));
+        this.props.navigation.navigate('LoadingScreen');
     }
 }
 
