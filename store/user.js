@@ -7,7 +7,7 @@ const hasHeaders = () => axios.defaults.headers.common.Authorization.startsWith(
 
 const STOCK_UUID = 'STOCK_UUID'
 const STOCK_USER_INFO = 'STOCK_USER_INFO'
-const STOCK_SAVED_PIECES = 'STOCK_SAVED_PIECES'
+// const STOCK_SAVED_PIECES = 'STOCK_SAVED_PIECES'
 const ADD_PIECE = 'ADD_PIECE'
 const REMOVE_PIECE = 'REMOVE_PIECE'
 
@@ -24,10 +24,10 @@ export const stockUserInfo = info => ({
   info,
 })
 
-const stockSavedPieces = pieces => ({
-  type: STOCK_SAVED_PIECES,
-  pieces,
-})
+// const stockSavedPieces = pieces => ({
+//   type: STOCK_SAVED_PIECES,
+//   pieces,
+// })
 
 const addPiece = piece => ({
   type: ADD_PIECE,
@@ -39,16 +39,16 @@ const removePiece = piece => ({
   piece,
 })
 
-export const getSavedPieces = () =>
-  dispatch => {
-  if (!hasHeaders()) return console.error('auth header not set')
-  axios.get(`${backEndAddress}/api/users/my-pieces`)
-  .then(res => res.data)
-  .then(pieces => {
-    console.log('pieces are:', pieces)
-    dispatch(stockSavedPieces(pieces))
-  })
-}
+// export const getSavedPieces = () =>
+//   dispatch => {
+//   if (!hasHeaders()) return console.error('auth header not set')
+//   axios.get(`${backEndAddress}/api/users/my-pieces`)
+//   .then(res => res.data)
+//   .then(pieces => {
+//     console.log('pieces are:', pieces)
+//     dispatch(stockSavedPieces(pieces))
+//   })
+// }
 
 export const postSavedPiece = piece =>
   dispatch => {
@@ -125,13 +125,14 @@ const userReducer = (state = initialState, action) => {
         email: action.info.email,
         pictureUrl: action.info.facebookPicUrl,
         facebookId: action.info.facebookId,
+        pieces: action.info.pieces
       }
 
-    case STOCK_SAVED_PIECES:
-      return {
-        ...state,
-        pieces: action.pieces,
-      }
+    // case STOCK_SAVED_PIECES:
+    //   return {
+    //     ...state,
+    //     pieces: action.pieces,
+    //   }
 
     case ADD_PIECE:
     return {

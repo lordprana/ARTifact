@@ -1,22 +1,17 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { Text, View, Image, FlatList } from 'react-native'
+import { Text, View, Image } from 'react-native'
 import { getSavedPieces } from '../store/user'
 
-class UserPage extends Component {
+const UserPage = props => {
 
-  componentDidMount() {
-    this.props.getSavedPieces()
-  }
-
-  render() {
     return (
       <View>
-        <Text>{this.props.name}</Text>
-        <Image source={{ uri: this.props.pictureUrl }} />
+        <Text>{props.name}</Text>
+        <Image source={{ uri: props.pictureUrl }} />
         <Text>Recommnded works</Text>
         <Text>Saved works</Text>
-        {this.props.savedPieces.map(piece => (
+        {props.savedPieces.map(piece => (
             <View key={piece.id}>
               <Text>{piece.name}</Text>
               <Text>{piece.year}</Text>
@@ -26,7 +21,6 @@ class UserPage extends Component {
         )}
       </View>
     )
-  }
 }
 
 const mapState = state => ({
