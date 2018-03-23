@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
   },
   ocrButton: {
     position: 'absolute',
-    bottom: 20,
-    right: 20,
+    bottom: Dimensions.get('screen').height * 0.03,
+    right: Dimensions.get('screen').width * 0.03,
     padding: 10
   },
   ocrButtonBackground: {
