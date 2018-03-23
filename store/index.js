@@ -1,18 +1,19 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import createLogger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
-import Posts from './posts'
-// import user from './user';
+import posts from './posts';
+import user from './user';
+import piece from './piece';
 
-export const backEndAddress = 'http://25259523.ngrok.io'
+const reducer = combineReducers({ user, posts, piece });
+const middleware = composeWithDevTools(applyMiddleware(
+  thunkMiddleware,
+  createLogger({collapsed: true})
+));
+const store = createStore(reducer, middleware);
 
-const reducer = combineReducers({Posts});
-// const middleware = composeWithDevTools(applyMiddleware(
-//   thunkMiddleware,
-//   createLogger({collapsed: true})
-// ));
-// const store = createStore(reducer, middleware);
-
-// export default store;
+export default store;
 // export * from './user';
+export * from './piece';
+export * from './posts';
