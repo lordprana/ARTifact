@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Animated, Text } from 'react-native';
+import { View, Animated, Text } from 'react-native';
 import styles from '../styles';
 
 export default class LoadingScreen extends React.Component {

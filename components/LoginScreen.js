@@ -1,8 +1,8 @@
-import React from 'react'
-import { Text, View } from 'react-native'
-import styles from '../styles'
-import LoginButton from './LoginButton'
-import BackgroundImage from './BackgroundImage'
+import React from 'react';
+import { Text, View } from 'react-native';
+import styles from '../styles';
+import LoginButton from './LoginButton';
+import BackgroundImage from './BackgroundImage';
 
 const LoginScreen = () => {
   return (
@@ -12,7 +12,7 @@ const LoginScreen = () => {
         <LoginButton />
       </View>
     </BackgroundImage>
-  )
-}
+  );
+};
 
-export default LoginScreen
+export default LoginScreen;
