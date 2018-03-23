@@ -64,11 +64,9 @@ class OCR extends React.Component {
             this.props.stockPosts(piece.posts);
             delete piece.posts;
             this.props.stockPiece(piece);
-            // TODO Add navigation to Piece forum here
-            //this.props.navigation.navigate('fakeForum');
+            this.props.navigation.navigate('fakeForum');
           } else {
-            // TODO Navigate to NoneIdentified component
-            //this.props.navigation.navigate('NoneIdentified');
+            this.props.navigation.navigate('NoneIdentified');
           }
         })
         .catch(console.error.bind(console));

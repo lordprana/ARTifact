@@ -12,20 +12,13 @@ class DisambiguatePicker extends React.Component {
     this._onPress = this._onPress.bind(this);
   }
 
-  // _onPress(piece) {
-  //   console.log('PIECE', piece);
-  //   return () => {
-  //     // console.log(this);
-  //     // this.props.stockPosts(piece.posts);
-  //     // delete piece.posts;
-  //     // this.props.stockPiece(piece);
-  //     console.log("PROPS:", this.props)
-  //     // this.props.navigation.navigate('fakeForum');
-  //   };
-  // }
-
-  _onPress() {
-      console.log("PROPS:", this.props)
+  _onPress(piece) {
+    return function() {
+      this.props.stockPosts(piece.posts);
+      delete piece.posts;
+      this.props.stockPiece(piece);
+      this.props.navigation.navigate('fakeForum');
+    }.bind(this);
   }
 
   render() {
@@ -36,7 +29,7 @@ class DisambiguatePicker extends React.Component {
         {pieces.map(piece => (
           <TouchableOpacity
             key={piece.id}
-            onPress={this._onPress} >
+            onPress={this._onPress(piece)} >
             <View style={styles.disambiguateItem}>
               <Text
                 style={styles.disambiguateText}
