@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, FlatList, Button, Text, View, TextInput, ScrollView, Image, TouchableHighlight } from 'react-native';
 import { fetchPosts } from '../store/posts'
+import {connect} from 'react-redux'
 
 class RecursivePosts extends React.Component{
     constructor(props) {

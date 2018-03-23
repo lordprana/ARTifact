@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Text, View, TextInput, StyleSheet } from 'react-native';
 import {addPost} from '../store'
-
+import {connect} from 'react-redux'
 
 class CreatePost extends React.Component{
     constructor(props){

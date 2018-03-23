@@ -23,6 +23,7 @@ class Auth extends React.Component {
   componentDidMount() {
     this.props.getUuidFromStorage()
     .then(result => {
+      console.log('RESULT', result)
       if (result) this.props.getUserInfo()
     })
   }

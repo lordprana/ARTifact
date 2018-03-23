@@ -62,13 +62,16 @@ export const getUuidFromStorage = () =>
   dispatch =>
     AsyncStorage.getItem('uuid')
     .then(uuid => {
+      console.log('UUID', uuid)
       if (uuid) {
         return dispatch(stockUuid(uuid));
       } else {
         return null;
       }
     })
-    .catch(() => null);
+    .catch(() => { console.log('HERE')
+      return null}
+);
 
 export const setUuid = uuid =>
   dispatch => {
