@@ -87,7 +87,8 @@ export const getUserInfo = () =>
     if (!hasHeaders()) return console.error('auth header not set');
     axios.get(`${backEndAddress}/api/users/me`)
     .then(res => res.data)
-    .then(info => dispatch(stockUserInfo(info)));
+    .then(info => dispatch(stockUserInfo(info)))
+    .catch(() => dispatch(setUuid('')));
   };
 
 export const loginWithToken = token =>
