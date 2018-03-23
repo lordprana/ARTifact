@@ -1,11 +1,22 @@
 import React from 'react';
 import { StyleSheet, FlatList, Button, Text, View, TextInput, ScrollView } from 'react-native';
 import { fetchPosts } from '../store/posts'
+import RecursivePosts from './RecursivePosts';
 
 class AllPosts extends React.Component {
     constructor(props) {
         super(props)
+        //console.log(posts);
+       const postsByDate= posts.sort(function(a,b){
+           const date1 = new Date(a.createdAt)
+           const date2 = new Date(b.createdAt)
+            console.log('SUBTRACT', date1- date2)
+            return date2 - date1;
+          });
+
+          console.log('POSTS BY DATE', postsByDate)
     }
+
     // componentDidMount(){
     //     this.props.fetchPosts()
     // }
@@ -13,16 +24,7 @@ class AllPosts extends React.Component {
     render() {
         return (
             <View style={styles.view}>
-                    <FlatList
-                        data={posts}
-                        renderItem={({ item }) =>
-                            <Text style={styles.text}>
-                                <Text style={ styles.subjectLine }>{item.subjectLine + `\n`}</Text>
-                                <Text>{item.votes}</Text>
-                                <Text>{`\n` + item.content}</Text>
-                            </Text>
-                        }
-                    />
+                <RecursivePosts posts={posts} parentId={null} depth={0}/>
             </View>
         )
     }
@@ -33,21 +35,7 @@ class AllPosts extends React.Component {
 const styles = StyleSheet.create({
     view:{
         paddingTop: 10
-    },
-    subjectLine: {
-        fontSize: 16,
-        fontFamily: "Georgia",
-    },
-    text: {
-        fontSize:14,
-        fontFamily: "Georgia",
-        marginLeft: 6
-    },
-    votes: {
-        backgroundColor: 'red',
-        fontSize: 15
     }
-
   });
 
 
@@ -61,7 +49,9 @@ const posts = [
         "votes": 4,
         "pieceId": 2,
         "userId": 3,
-        "parentId": null
+        "parentId": null,
+        "id": 1,
+        'createdAt': '2018-03-23 11:41:18.5-04'
     },
     {
         "subjectLine": null,
@@ -69,7 +59,9 @@ const posts = [
         "votes": 10,
         "pieceId": 2,
         "userId": 5,
-        "parentId": 1
+        "parentId": 1,
+        "id": 2,
+        'createdAt': '2018-03-23 11:43:18.5-04'
     },
     {
         "subjectLine": null,
@@ -77,7 +69,9 @@ const posts = [
         "votes": 12,
         "pieceId": 2,
         "userId": 2,
-        "parentId": 1
+        "parentId": 1,
+        "id": 3,
+        'createdAt': '2018-03-23 11:42:18.5-04'
     },
     {
         "subjectLine": null,
@@ -85,7 +79,9 @@ const posts = [
         "votes": 8,
         "pieceId": 2,
         "userId": 3,
-        "parentId": 2
+        "parentId": 2,
+        "id": 4,
+        'createdAt': '2018-03-23 11:44:18.5-04'
     },
     {
         "subjectLine": null,
@@ -93,7 +89,9 @@ const posts = [
         "votes": 6,
         "pieceId": 2,
         "userId": 2,
-        "parentId": 4
+        "parentId": 2,
+        "id": 5,
+        'createdAt': '2018-03-23 11:47:18.5-04'
     }
 ]
 
