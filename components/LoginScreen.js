@@ -4,7 +4,7 @@ import styles from '../styles'
 import LoginButton from './LoginButton'
 import BackgroundImage from './BackgroundImage'
 import { connect } from 'react-redux';
-// import { StackNavigator } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import { getUuidFromStorage, getUserInfo } from '../store/user'
 
 const LoginScreen = () => {
@@ -32,7 +32,19 @@ class Auth extends React.Component {
       return (<LoginScreen />)
     } else {
     return (
-      this.props.navigation.navigate('swiper')
+      this.props.navigation.dispatch(
+        NavigationActions.reset(
+        {
+          index: 0,
+          actions: [
+            NavigationActions.navigate(
+              {
+                routeName: 'swiper'
+              }
+            )
+          ]
+        })
+      )
       // <View style={styles.container}>
       //   <Text>Welcome {this.props.name}</Text>
       //   <Image
