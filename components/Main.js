@@ -1,45 +1,41 @@
 import React from 'react';
 import { Text, View, Image } from 'react-native';
-import styles from '../styles';
-import { connect } from 'react-redux';
-import { getFacebookIdFromStorage, getUuidFromStorage, getUserInfo } from '../store/user';
-
+import { StackNavigator } from 'react-navigation';
 import LoginScreen from './LoginScreen';
-
-class App extends React.Component {
-
-  componentDidMount() {
-    this.props.getUuidFromStorage()
-    .then(result => {
-      if (result) this.props.getUserInfo();
-    });
+import fakeForum from './fakeForum';
+import fakeMuseum from './fakeMuseum';
+import swiper from './swiper';
+import DisambiguatePicker from './DisambiguatePicker';
+import Noneidentified from './NoneIdentified';
+import LoadingScreen from './LoadingScreen';
+// remove stacknavigator museum screen.
+const Stack = StackNavigator({
+  LoginScreen: {
+    screen: LoginScreen,
+  },
+  swiper: {
+    screen: swiper
+  },
+  fakeForum: {
+    screen: fakeForum
+  },
+  DisambiguatePicker: {
+    screen: DisambiguatePicker
+  },
+  NoneIdentified: {
+    screen: Noneidentified
+  },
+  LoadingScreen: {
+    screen: LoadingScreen
   }
-
+},
+  {
+    initialRouteName: 'LoginScreen',
+    headerMode: 'none'
+  }
+)
+export default class App extends React.Component {
   render() {
-    if (!this.props.uuid) {
-      return (<LoginScreen />);
-    } else {
-    return (
-      <View style={styles.container}>
-        <Text>Welcome {this.props.name}</Text>
-        <Image
-          style={{width: 50, height: 50}}
-          source={{uri: this.props.pictureUrl}}
-          />
-      </View>
-    );}
+    return <Stack />
   }
 }
-
-const mapState = state => ({
-  uuid: state.user.uuid,
-  name: state.user.name,
-  pictureUrl: state.user.pictureUrl
-});
-const mapDispatch = dispatch => ({
-  getFacebookIdFromStorage: () => dispatch(getFacebookIdFromStorage()),
-  getUuidFromStorage: () => dispatch(getUuidFromStorage()),
-  getUserInfo: () => dispatch(getUserInfo()),
-});
-
-export default connect(mapState, mapDispatch)(App);
