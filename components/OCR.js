@@ -4,10 +4,12 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { Camera, Permissions } from 'expo';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import styles from '../styles';
 import { backEndAddress } from '../config';
 import { stockPiece, getPosts } from '../store';
 import LoadingScreen from './LoadingScreen';
+import DisambiguatePicker from './DisambiguatePicker';
 
 
 class OCR extends React.Component {
@@ -17,7 +19,6 @@ class OCR extends React.Component {
     this.state = {
       hasCameraPermission: null,
       type: Camera.Constants.Type.back,
-      loading: false
     };
 
     this.camera = null;
@@ -33,7 +34,6 @@ class OCR extends React.Component {
   snap() {
     if (this.camera) {
       console.log('Taking photo');
-      this.setState({loading: true});
       this.camera.takePictureAsync({ base64: true, quality: 0.1 })
         .then(photo => {
           console.log('Took photo');
@@ -55,20 +55,80 @@ class OCR extends React.Component {
         })
         .then(res => {
           console.log(res.data);
-          this.setState({loading: false});
           if (res.data.length > 1){
-            // TODO Add navigation to disambiguatepicker here
+            this.props.navigation.dispatch(
+              NavigationActions.reset(
+                {
+                  index: 1,
+                  actions: [
+                    NavigationActions.navigate(
+                      {
+                        routeName: 'swiper'
+                      }
+                    ),
+                    NavigationActions.navigate(
+                      {
+                        routeName: 'DisambiguatePicker',
+                        params: {
+                          pieces: res.data
+                        }
+                      }
+                    )
+                  ]
+                })
+            );
           } else if (res.data.length === 1) {
             const piece = res.data[0];
             this.props.stockPosts(piece.posts);
             delete piece.posts;
             this.props.stockPiece(piece);
-            // TODO Add navigation to Piece forum here
+            this.props.navigation.dispatch(
+              NavigationActions.reset(
+                {
+                  index: 1,
+                  actions: [
+                    NavigationActions.navigate(
+                      {
+                        routeName: 'swiper'
+                      }
+                    ),
+                    NavigationActions.navigate(
+                      {
+                        routeName: 'fakeForum',
+                        params: {
+                          pieces: res.data
+                        }
+                      }
+                    )
+                  ]
+                })
+              );
           } else {
-            // TODO Navigate to NoneIdentified component
+            this.props.navigation.dispatch(
+              NavigationActions.reset(
+                {
+                  index: 1,
+                  actions: [
+                    NavigationActions.navigate(
+                      {
+                        routeName: 'swiper'
+                      }
+                    ),
+                    NavigationActions.navigate(
+                      {
+                        routeName: 'NoneIdentified',
+                        params: {
+                          pieces: res.data
+                        }
+                      }
+                    )
+                  ]
+                })
+              );
           }
         })
         .catch(console.error.bind(console));
+        this.props.navigation.navigate('LoadingScreen');
     }
 }
 
@@ -82,7 +142,7 @@ class OCR extends React.Component {
       return (
         <View style={{ flex: 1 }}>
           <Camera style={styles.ocrCamera} type={this.state.type} ref={ref => {this.camera = ref;}} >
-            <Text style={styles.ocrText}>>
+            <Text style={styles.ocrText}>
               Take a picture of the art plaque to join the conversation about the piece
             </Text>
             <View
@@ -95,16 +155,14 @@ class OCR extends React.Component {
                 style={styles.ocrButton}
                 onPress={this.snap}>
                 <View style={styles.ocrButtonBackground}>
-                  <Image style={styles.ocrButtonIcon}
+                  <Image
+style={styles.ocrButtonIcon}
                     source={require('../resources/icons/photo-camera.png')}
                   />
                 </View>
               </TouchableOpacity>
             </View>
           </Camera>
-          {
-            this.state.loading && <LoadingScreen />
-          }
         </View>
       );
     }

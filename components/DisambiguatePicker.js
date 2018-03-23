@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import styles from '../styles';
 import { stockPiece, getPosts } from '../store';
 
@@ -14,20 +15,39 @@ class DisambiguatePicker extends React.Component {
 
   _onPress(piece) {
     return function() {
-      console.log(this);
       this.props.stockPosts(piece.posts);
       delete piece.posts;
       this.props.stockPiece(piece);
-      // navigate to forum
+      this.props.navigation.dispatch(
+        NavigationActions.reset(
+          {
+            index: 1,
+            actions: [
+              NavigationActions.navigate(
+                {
+                  routeName: 'swiper'
+                }
+              ),
+              NavigationActions.navigate(
+                {
+                  routeName: 'fakeForum',
+                }
+              )
+            ]
+          })
+      );
     }.bind(this);
   }
 
   render() {
+    const pieces = this.props.navigation.state.params.pieces;
     return (
       <ScrollView style={styles.disambiguateContainer}>
         <Text style={styles.disambiguateTitle}>Choose a piece</Text>
-        { this.props.pieces.map(piece => (
-          <TouchableOpacity onPress={this._onPress(piece)} >
+        {pieces.map(piece => (
+          <TouchableOpacity
+            key={piece.id}
+            onPress={this._onPress(piece)} >
             <View style={styles.disambiguateItem}>
               <Text
                 style={styles.disambiguateText}
@@ -39,7 +59,7 @@ class DisambiguatePicker extends React.Component {
           </TouchableOpacity>
         ))}
       </ScrollView>
-    )
+    );
   }
 }
 
