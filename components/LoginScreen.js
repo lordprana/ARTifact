@@ -15,8 +15,8 @@ const LoginScreen = () => {
         <LoginButton />
       </View>
     </BackgroundImage>
-  )
-}
+  );
+};
 
 class Auth extends React.Component {
 
@@ -68,6 +68,3 @@ const mapDispatch = dispatch => ({
 })
 
 export default connect(mapState, mapDispatch)(Auth)
-
-// export default LoginScreen
-

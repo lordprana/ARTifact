@@ -41,7 +41,7 @@ class DisambiguatePicker extends React.Component {
           </TouchableOpacity>
         ))}
       </ScrollView>
-    )
+    );
   }
 }
 
