@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Image } from 'react-native';
-import { Permissions, Location } from 'expo';
+import { Permissions, Location, AppLoading, Asset } from 'expo';
 import styles from '../styles';
 import LoginButton from './LoginButton';
 import BackgroundImage from './BackgroundImage';
@@ -51,8 +51,7 @@ class Auth extends React.Component {
                     ]
                   })
               );
-            }
-            );
+            });
         }
       });
   }
@@ -61,10 +60,31 @@ class Auth extends React.Component {
     this.setState({ hasLocationPermission: status === 'granted' });
     // return Location.getCurrentPositionAsync({ enableHighAccuracy: true });
   }
+
+  _loadResourcesAsync = async () => {
+    return Promise.all([
+      Asset.loadAsync([
+        require('../londonMuseum.jpg'),
+      ])
+    ]);
+  }
+
+  _handleLoadingError = error => {
+    console.error(error);
+  };
+
+  _handleFinishLoading = () => {
+    this.setState({ loading: false });
+  };
+
   render() {
     return (
       this.state.loading
-        ? <LoginScreen renderLoginButton={false} />
+        ? <AppLoading
+            startAsync={this._loadResourcesAsync}
+            onError={this._handleLoadingError}
+            onFinish={this._handleFinishLoading}
+           />
         : !this.props.uuid
           ? <LoginScreen
             renderLoginButton={true}
