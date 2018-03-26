@@ -31,10 +31,9 @@ class Auth extends React.Component {
     this.getLocation = this.getLocation.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getUuidFromStorage()
       .then(result => {
-        this.setState({ loading: false });
         if (result) {
           this.props.getUserInfo()
             .then(result => {
