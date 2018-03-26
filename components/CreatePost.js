@@ -8,12 +8,14 @@ class CreatePost extends React.Component{
         super(props)
         this.state = {
             subjectLine: '',
-            content: ''
+            content: '',
+            userId: 1,
+            pieceId: 2
         }
         this.handleSubmit = this.handleSubmit.bind(this)
     }
     handleSubmit(event){
-        event.preventDefault()
+        // event.preventDefault()
         const { addPost } = this.props
         addPost(this.state)
     }
@@ -21,7 +23,8 @@ class CreatePost extends React.Component{
         return(
             <View style = {styles.view}>
             <View style = {styles.header}>
-            <Text style={{fontFamily: 'Georgia',
+            <Text style={{
+                //fontFamily: 'Georgia',
         fontSize: 30,}}>
         Make A Post</Text>
         </View>
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
 })
 
 
-const mapDispatch = (dispatch, ownProps) => ({
+const mapDispatch = (dispatch) => ({
     addPost: (post) => 
         dispatch(addPost(post))
 })

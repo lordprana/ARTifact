@@ -5,11 +5,12 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import posts from './posts';
 import user from './user';
 import piece from './piece';
+import museum from './museum';
 
-const reducer = combineReducers({ user, posts, piece });
+const reducer = combineReducers({ user, posts, piece, museum });
 const middleware = composeWithDevTools(applyMiddleware(
-  thunkMiddleware,
-  createLogger({collapsed: true})
+  thunkMiddleware
+  //createLogger({collapsed: true})
 ));
 const store = createStore(reducer, middleware);
 

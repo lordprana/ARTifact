@@ -7,7 +7,7 @@ const CREATE_POST = 'CREATE_POST';
 const UPDATE_POST = 'UPDATE_POST';
 const DELETE_POST = 'DELETE_POST';
 
-export const getPosts = (posts) => {
+const getPosts = (posts) => {
     return {
         type: GET_ALL,
         posts
@@ -20,6 +20,7 @@ const createPost = (post) => {
         post
     };
 };
+
 
 const updatePost = (post) => {
     return {
@@ -54,6 +55,7 @@ export function addPost(post){
         .catch(err => console.error(`Creating ${post} unsuccessful`, err));
     };
 }
+
 
 export function editPost(post, id){
     return function thunk(dispatch){

@@ -1,24 +1,34 @@
 import React from 'react';
 import { StyleSheet, FlatList, Button, Text, View, TextInput, ScrollView, Image, TouchableHighlight } from 'react-native';
-import { fetchPosts } from '../store/posts'
-import {connect} from 'react-redux'
+import { fetchPosts, editPost } from '../store/posts';
+import {connect} from 'react-redux';
 
 class RecursivePosts extends React.Component{
     constructor(props) {
         super(props)
-        const posts = this.props.posts
-        this.filteredPosts = posts.filter(post => post.parentId === this.props.parentId)
+        //const posts = this.props.posts
+        this.filteredPosts = this.props.posts.filter(post => post.parentId === this.props.parentId)
         this.sortedPostsVotes = this.filteredPosts.sort(function(a, b){
             return b.votes - a.votes
         })
-
         this.sortedPostsTime = this.filteredPosts.sort(function(a, b){
             return Number(b.createdAt) - Number(a.createdAt)
         })
-    }
-    render(){
 
-    
+    }
+
+    updateVotes(post, votes){
+        this.props.editPost(
+            {
+                ...post,
+                votes
+            },
+            post.id
+        )
+    }
+
+    render(){
+        var {votes} = this.props
     return (
         <View style={styles.mainView}>
         <FlatList
@@ -36,7 +46,7 @@ class RecursivePosts extends React.Component{
                 </Text>
                 </View>
                 <View style={styles.votesAndIcons}>
-                <TouchableHighlight onPress={()=>item.votes-1}>
+                <TouchableHighlight onPress={()=> this.updateVotes(item, item.votes-1)}>
                 <Image 
                     source = {require('../public/img/Minus.png')}
                     style={{width: 26, height: 26}} 
@@ -52,7 +62,7 @@ class RecursivePosts extends React.Component{
                         {item.votes}</Text>
                         </View>
                         <TouchableHighlight 
-                        onPress={()=>item.votes+1}>
+                        onPress={()=>this.updateVotes(item, item.votes+1)}>
                         <Image 
                     source = {require('../public/img/Plus.png')}
                     style={{width: 27, height: 27}} />
@@ -72,6 +82,7 @@ class RecursivePosts extends React.Component{
 }
 }
 
+
 const styles = StyleSheet.create({
     mainView: {
         paddingLeft: 10
@@ -88,7 +99,7 @@ const styles = StyleSheet.create({
   },
   subjectLine: {
       fontSize: 16,
-      fontFamily: "Georgia"
+      //fontFamily: "Georgia"
   },
   votesAndIcons: {
       flexWrap: 'wrap',
@@ -112,6 +123,7 @@ const styles = StyleSheet.create({
 
 const mapDispatch = dispatch => ({
   fetchPosts: () => dispatch(fetchPosts()),
+  editPost: (post, id) => dispatch(editPost(post, id))
 })
 
 export default connect(null, mapDispatch)(RecursivePosts)
