@@ -1,6 +1,9 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import { Constants } from 'expo';
 
+const softMenuBarHeight = Dimensions.get('screen').height
+                          - Dimensions.get('window').height
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -31,8 +34,8 @@ const styles = StyleSheet.create({
   },
   ocrButton: {
     position: 'absolute',
-    bottom: 20,
-    right: 20,
+    bottom: softMenuBarHeight + Dimensions.get('screen').height * 0.03,
+    right: Dimensions.get('screen').width * 0.03,
     padding: 10
   },
   ocrButtonBackground: {
