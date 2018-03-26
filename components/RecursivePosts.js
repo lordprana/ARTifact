@@ -103,21 +103,18 @@ const styles = StyleSheet.create({
   },
   votesAndIcons: {
       flexWrap: 'wrap',
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: 'flex-end',
+      justifyContent: 'flex-end',
       flexDirection:'row',
-      margin: 5
+      marginRight: 8
   },
   vote: {
-    backgroundColor: '#78AB46',
     width: 20,
     height: 20,
     alignItems: 'center',
+    justifyContent: 'center',
     marginLeft: 5,
-    marginRight: 5,
-    transform: [
-      {rotate: '45deg'}
-    ]    
+    marginRight: 5
   }
 });
 

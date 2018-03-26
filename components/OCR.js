@@ -94,7 +94,7 @@ class OCR extends React.Component {
                     ),
                     NavigationActions.navigate(
                       {
-                        routeName: 'fakeForum',
+                        routeName: 'AllPosts',
                         params: {
                           pieces: res.data
                         }

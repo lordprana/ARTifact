@@ -1,46 +1,54 @@
 import React from 'react';
 import { StyleSheet, FlatList, Button, Text, View, TextInput, ScrollView } from 'react-native';
+import {connect} from 'react-redux'
 import { fetchPosts } from '../store/posts'
 import RecursivePosts from './RecursivePosts';
-
 class AllPosts extends React.Component {
-    constructor(props) {
-        super(props)
-        
-    //    const postsByDate= posts.sort(function(a,b){
-    //        const date1 = new Date(a.createdAt)
-    //        const date2 = new Date(b.createdAt)
-    //         console.log('SUBTRACT', date1- date2)
-    //         return date2 - date1;
-    //       });
+  constructor(props) {
+    super(props);
+  }
 
-        //   console.log('POSTS BY DATE', postsByDate)
-    }
+  componentDidMount() {
+    this.props.fetchPosts();
+    console.log(this.props.posts);
+  }
 
-    componentDidMount(){
-        this.props.fetchPosts()
-        console.log(this.props.post)
-    }
-
-    render() {
-        return (
-            <View style={styles.view}>
-                <RecursivePosts posts={posts} parentId={null} depth={0}/>
-            </View>
-        )
-    }
+  render() {
+    return (
+      <View style={styles.view}>
+        <ScrollView>
+          <Text style={styles.pieceName}>{this.props.piece.name}</Text>
+          <Text style={styles.artistName}>
+            by {this.props.piece.artist.name}
+          </Text>
+          <RecursivePosts posts={this.props.posts} parentId={null} depth={0} />
+        </ScrollView>
+      </View>
+    );
+  }
 }
 
 
 
 const styles = StyleSheet.create({
     view:{
-        paddingTop: 10
+        marginTop: 25
+    },
+    pieceName: {
+        fontSize: 25,
+        textAlign: 'center'
+    },
+    artistName: {
+        fontSize: 19,
+        textAlign: 'center',
+        marginBottom: 25
     }
+    
   });
 
 mapStateToProps = state => ({
-    posts: state.posts
+    posts: state.posts,
+    piece: state.piece
 })
 
   const mapDispatchToProps = dispatch => ({

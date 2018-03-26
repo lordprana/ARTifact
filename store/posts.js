@@ -7,7 +7,7 @@ const CREATE_POST = 'CREATE_POST';
 const UPDATE_POST = 'UPDATE_POST';
 const DELETE_POST = 'DELETE_POST';
 
-const getPosts = (posts) => {
+export const getPosts = (posts) => {
     return {
         type: GET_ALL,
         posts
