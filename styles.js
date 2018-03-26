@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   ocrCamera: {
     height: Dimensions.get('screen').height,
     width: Dimensions.get('screen').width,
-    position: 'absolute'
+    position: 'absolute',
   },
   noneIdentifiedBackground: {
     backgroundColor: '#4286f4',

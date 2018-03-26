@@ -1,5 +1,6 @@
 import React from 'react';
 import Expo from 'expo';
+import { NavigationActions } from 'react-navigation';
 import { Button, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { loginWithToken } from '../store/user';
@@ -13,6 +14,19 @@ const LoginButton = props => {
     });
     if (type === 'success') {
       props.loginWithToken(token);
+      props.navigation.dispatch(
+        NavigationActions.reset(
+          {
+            index: 0,
+            actions: [
+              NavigationActions.navigate(
+                {
+                  routeName: 'swiper'
+                }
+              )
+            ]
+          })
+      );
     } else {
       Alert.alert('Error', `Could not log in to Facebook`);
     }
