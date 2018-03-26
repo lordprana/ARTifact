@@ -10,7 +10,6 @@ class AllPosts extends React.Component {
 
   componentDidMount() {
     this.props.fetchPosts();
-    console.log(this.props.posts);
   }
 
   render() {
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 25
     }
-    
+
   });
 
 mapStateToProps = state => ({
@@ -54,7 +53,7 @@ mapStateToProps = state => ({
   const mapDispatchToProps = dispatch => ({
     fetchPosts: () => dispatch(fetchPosts())
   })
-  
+
   export default connect(mapStateToProps, mapDispatchToProps)(AllPosts)
-  
+
 

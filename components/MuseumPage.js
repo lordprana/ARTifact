@@ -17,7 +17,6 @@ componentDidMount(){
 }
 
   render() {
-    console.log(this.props.pieces)
     return (
       <View style={styles.carouselContainer}>
         <ScrollView>
