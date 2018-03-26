@@ -100,8 +100,64 @@ const styles = StyleSheet.create({
   noneIdentifiedIcon: {
     height: 36,
     width: 36
+  },
+  userHeader: {
+    paddingTop: 24,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 6,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#6772e5',
+  },
+  userName: {
+    color: 'white',
+    fontSize: 36,
+  },
+  profilePic: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  savedPiece: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#d3d5ea',
+    marginBottom: 20,
+  },
+  savedPieceSeparator: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  savedPiecePic: {
+    width: 96,
+    height: 96,
+    resizeMode: 'cover',
+    marginRight: 20,
+  },
+  savedPieceTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  savedPieceText: {
+    fontSize: 18,
+  },
+  savedPieceTextContainer: {
+    paddingVertical: 6,
+  },
+  userPageSubtitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    margin: 6,
+  },
+  tempArrow: {
+    width: 60,
+    height: 60,
+    resizeMode: 'contain',
   }
-
 });
 
 export default styles;
