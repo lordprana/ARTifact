@@ -6,6 +6,7 @@ import posts from './posts';
 import user from './user';
 import piece from './piece';
 import museum from './museum';
+
 const reducer = combineReducers({ user, posts, piece, museum });
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,

@@ -8,6 +8,7 @@ import swiper from './swiper';
 import DisambiguatePicker from './DisambiguatePicker';
 import Noneidentified from './NoneIdentified';
 import LoadingScreen from './LoadingScreen';
+import AllPosts from './AllPosts';
 // remove stacknavigator museum screen.
 const Stack = StackNavigator({
   LoginScreen: {
@@ -27,6 +28,9 @@ const Stack = StackNavigator({
   },
   LoadingScreen: {
     screen: LoadingScreen
+  },
+  AllPosts: {
+    screen: AllPosts
   }
 },
   {
@@ -39,3 +43,10 @@ export default class App extends React.Component {
     return <Stack />
   }
 }
+
+// const styles = StyleSheet.create({
+//   view: {
+//     backgroundColor: 'cornsilk',
+//     paddingTop: 10
+//   }
+// })
