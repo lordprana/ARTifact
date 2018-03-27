@@ -1,3 +1,3 @@
-export const backEndAddress = 'http://172.16.23.75:8080';
+export const backEndAddress = 'http://3ca27364.ngrok.io';
 
 export const appId = '2009994855934003';

@@ -3,7 +3,7 @@ import Swiper from 'react-native-swiper';
 import randomcolor from 'randomcolor';
 import { View, Text } from 'react-native';
 import MuseumPage from './MuseumPage';
-import FakeUser from './fakeUser';
+import UserPage from './UserPage'
 import OCR from './OCR';
 class TitleText extends React.Component {
 
@@ -39,9 +39,7 @@ export default class FakeCam extends React.Component {
             <View >
               <OCR navigation={this.props.navigation} />
             </View>
-          <View style={this.viewStyle()}>
-            <FakeUser />
-          </View>
+          <UserPage />
         </Swiper>
       )
   }
