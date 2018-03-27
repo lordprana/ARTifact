@@ -28,7 +28,8 @@ class Auth extends React.Component {
   constructor() {
     super();
     this.state = {
-      loading: true,
+      loadingImage: true,
+      loadingUUID: true,
       hasLocationPermission: null
     };
     this.getLocation = this.getLocation.bind(this);
@@ -39,6 +40,7 @@ class Auth extends React.Component {
       .then(result => {
         this.props.getUuidFromStorage()
           .then(result => {
+            this.setState({loadingUUID: false});
             if (result) {
               this.props.getUserInfo()
                 .then(result => {
@@ -84,12 +86,12 @@ class Auth extends React.Component {
   };
 
   _handleFinishLoading = () => {
-    this.setState({ loading: false });
+    this.setState({ loadingImage: false });
   };
 
   render() {
     return (
-      this.state.loading
+      this.state.loadingImage || this.state.loadingUUID
         ? <AppLoading
           startAsync={this._loadResourcesAsync}
           onError={this._handleLoadingError}
