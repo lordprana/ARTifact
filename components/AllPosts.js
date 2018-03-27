@@ -64,7 +64,6 @@ class AllPosts extends React.Component {
   }
 
   render() {
-    console.log('POSTS', this.props.posts);
     return (
       <View style={styles.view}>
           <Text style={styles.pieceName}>{this.props.piece.name}</Text>
