@@ -18,3 +18,4 @@ export default store;
 // export * from './user';
 export * from './piece';
 export * from './posts';
+export * from './museum';

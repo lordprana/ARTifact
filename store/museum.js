@@ -16,10 +16,11 @@ const topPieces = (pieces) => {
   }
 }
 
-export const getMuseumNearMe = (lat, long) =>
-  dispatch =>
-    axios.get(`${backEndAddress}/api/museums/location/?lat=${lat}&long=${long}`)
+export const getMuseumNearMe = (latitude, longitude) =>
+  dispatch => {
+    axios.get(`${backEndAddress}/api/museums/location/?latitude=${latitude}&longitude=${longitude}`)
     .then(museum => dispatch(stockMuseum(museum)))
+  }
 
 export function fetchTopPieces(museumId){
   return function thunk(dispatch){
@@ -31,7 +32,6 @@ export function fetchTopPieces(museumId){
     .catch(err => console.error('Fetching top pieces failed', err));
   }
 }
-
 
 const initialState = {
   museum: {},

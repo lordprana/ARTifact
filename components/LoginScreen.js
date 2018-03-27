@@ -7,6 +7,9 @@ import BackgroundImage from './BackgroundImage';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { getUuidFromStorage, getUserInfo } from '../store/user';
+import { getMuseumNearMe } from '../store/museum';
+// import { backEndAddress } from '../config';
+// import axios from 'axios';
 
 const LoginScreen = (props) => {
   return (
@@ -32,32 +35,40 @@ class Auth extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUuidFromStorage()
+    this.getLocation()
       .then(result => {
-        if (result) {
-          this.props.getUserInfo()
-            .then(result => {
-              this.props.navigation.dispatch(
-                NavigationActions.reset(
-                  {
-                    index: 0,
-                    actions: [
-                      NavigationActions.navigate(
-                        {
-                          routeName: 'swiper'
-                        }
-                      )
-                    ]
-                  })
-              );
-            });
-        }
-      });
+        this.props.getUuidFromStorage()
+          .then(result => {
+            if (result) {
+              this.props.getUserInfo()
+                .then(result => {
+                  this.props.navigation.dispatch(
+                    NavigationActions.reset(
+                      {
+                        index: 0,
+                        actions: [
+                          NavigationActions.navigate(
+                            {
+                              routeName: 'swiper'
+                            }
+                          )
+                        ]
+                      })
+                  );
+                });
+            }
+          });
+      })
   }
   async getLocation() {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
     this.setState({ hasLocationPermission: status === 'granted' });
-    // return Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+    Location.getCurrentPositionAsync({ enableHighAccuracy: true })
+      .then(result => {
+        const latitude = result.coords.latitude;
+        const longitude = result.coords.longitude;
+        this.props.getMuseumNearMe(latitude, longitude)
+      })
   }
 
   _loadResourcesAsync = async () => {
@@ -80,10 +91,10 @@ class Auth extends React.Component {
     return (
       this.state.loading
         ? <AppLoading
-            startAsync={this._loadResourcesAsync}
-            onError={this._handleLoadingError}
-            onFinish={this._handleFinishLoading}
-           />
+          startAsync={this._loadResourcesAsync}
+          onError={this._handleLoadingError}
+          onFinish={this._handleFinishLoading}
+        />
         : !this.props.uuid
           ? <LoginScreen
             renderLoginButton={true}
@@ -100,6 +111,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getUuidFromStorage: () => dispatch(getUuidFromStorage()),
   getUserInfo: () => dispatch(getUserInfo()),
+  getMuseumNearMe: (latitude, longitude) => dispatch(getMuseumNearMe(latitude, longitude))
 });
 
 export default connect(mapState, mapDispatch)(Auth);
