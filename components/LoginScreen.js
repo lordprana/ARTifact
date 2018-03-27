@@ -69,7 +69,6 @@ class Auth extends React.Component {
         const longitude = result.coords.longitude;
         this.props.getMuseumNearMe(latitude, longitude)
       })
-    ///^^ move this to OCR component to get museumID.
   }
 
   _loadResourcesAsync = async () => {
