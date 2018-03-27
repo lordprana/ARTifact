@@ -6,11 +6,6 @@ import {connect} from 'react-redux';
 class RecursivePosts extends React.Component{
     constructor(props) {
         super(props);
-        //const posts = this.props.posts
-    }
-
-    componentDidMount() {
-        console.log('PROPS', this.props);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -71,7 +66,8 @@ class RecursivePosts extends React.Component{
                                             }] }} />
                                     </TouchableHighlight>
                                 </View>
-                                <RecursivePosts key={item.id} posts={this.props.posts} parentId={item.id} depth={this.props.depth + 1} />
+                                <RecursivePosts key={item.id} posts={this.props.posts} editPost={this.props.editPost}
+                                 parentId={item.id} depth={this.props.depth + 1} />
                             </View>
 
                         );
@@ -114,8 +110,7 @@ const styles = StyleSheet.create({
 });
 
 const mapDispatch = dispatch => ({
-  fetchPosts: () => dispatch(fetchPosts()),
-  editPost: (post, id) => dispatch(editPost(post, id))
+  fetchPosts: () => dispatch(fetchPosts())
 });
 
 export default connect(null, mapDispatch)(RecursivePosts);

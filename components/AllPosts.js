@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, FlatList, Button, Text, View, TextInput, ScrollView } from 'react-native';
 import {connect} from 'react-redux'
-import { fetchPosts } from '../store/posts'
+import { fetchPosts, editPost } from '../store/posts'
 import RecursivePosts from './RecursivePosts';
 class AllPosts extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class AllPosts extends React.Component {
           <Text style={styles.artistName}>
             by {this.props.piece.artist.name}
           </Text>
-          <RecursivePosts posts={this.props.posts} parentId={null} depth={0} />
+          <RecursivePosts editPosts={this.props.editPost} posts={this.props.posts} parentId={null} depth={0} />
         </ScrollView>
       </View>
     );
@@ -51,7 +51,8 @@ mapStateToProps = state => ({
 })
 
   const mapDispatchToProps = dispatch => ({
-    fetchPosts: () => dispatch(fetchPosts())
+    fetchPosts: () => dispatch(fetchPosts()),
+    editPost: (post, id) => dispatch(editPost(post, id))
   })
 
   export default connect(mapStateToProps, mapDispatchToProps)(AllPosts)
