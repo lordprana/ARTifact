@@ -7,6 +7,7 @@ import fakeMuseum from './fakeMuseum';
 import swiper from './swiper';
 import DisambiguatePicker from './DisambiguatePicker';
 import Noneidentified from './NoneIdentified';
+import LoadingScreen from './LoadingScreen';
 // remove stacknavigator museum screen.
 const Stack = StackNavigator({
   LoginScreen: {
@@ -23,6 +24,9 @@ const Stack = StackNavigator({
   },
   NoneIdentified: {
     screen: Noneidentified
+  },
+  LoadingScreen: {
+    screen: LoadingScreen
   }
 },
   {
@@ -35,4 +39,3 @@ export default class App extends React.Component {
     return <Stack />
   }
 }
-
