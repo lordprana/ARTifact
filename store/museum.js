@@ -8,11 +8,11 @@ const stockMuseum = museum => ({
   museum,
 })
 
-export const getMuseumNearMe = (lat, long) =>
-  dispatch =>
-    axios.get(`${backEndAddress}/api/museums/location/?lat=${lat}&long=${long}`)
+export const getMuseumNearMe = (latitude, longitude) =>
+  dispatch => {
+    axios.get(`${backEndAddress}/api/museums/location/?latitude=${latitude}&longitude=${longitude}`)
     .then(museum => dispatch(stockMuseum(museum)))
-
+  }
 
 const initialState = {
   museum: {},
