@@ -1,11 +1,12 @@
 import React from 'react'
 import { Text, View, Image } from 'react-native'
-import { Permissions, Location } from 'expo';
+import axios from 'axios';
 import styles from '../styles'
 import LoginButton from './LoginButton'
 import BackgroundImage from './BackgroundImage'
 import { connect } from 'react-redux';
-// import { StackNavigator } from 'react-navigation';
+import { backEndAddress } from '../config';
+import { Permissions, Location } from 'expo';
 import { getUuidFromStorage, getUserInfo } from '../store/user';
 import myImage from '../londonMuseum.jpg';
 //black screen //fade by opacity
@@ -73,7 +74,23 @@ class Auth extends React.Component {
   async getLocation() {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
     this.setState({ hasLocationPermission: status === 'granted' });
-    return Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+    // Location.getCurrentPositionAsync({ enableHighAccuracy: true })
+    // .then(result => console.log(result));
+    return Location.getCurrentPositionAsync({ enableHighAccuracy: true })
+    .then(result => {
+      console.log("WE ARE HERE")
+      axios.get(`${backEndAddress}/api/museums/location`, {
+        params: {
+          latitude: result.coords.latitude,
+          longitude: result.coords.longitude
+        }
+      })
+      .then(res => {
+        console.log("THIS IS THE ID:", res.data)
+        return res.data
+      })
+    })
+    ///^^ move this to OCR component to get museumID.
   }
   render() {
     return (
@@ -97,6 +114,8 @@ class Auth extends React.Component {
   // }
 }
 const mapState = state => ({
+  latitude: state.user.latitude,
+  longitude: state.user.longitude,
   uuid: state.user.uuid,
   name: state.user.name,
   pictureUrl: state.user.pictureUrl
