@@ -13,7 +13,7 @@ class MuseumPage extends Component {
   }
 
 componentDidMount(){
-  this.props.fetchTopPieces(1)
+  //this.props.fetchTopPieces(1)
 }
 
   render() {

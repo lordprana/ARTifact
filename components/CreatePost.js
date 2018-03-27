@@ -1,99 +1,83 @@
 import React from 'react';
-import { Button, Text, View, TextInput, StyleSheet } from 'react-native';
-import {addPost} from '../store'
-import {connect} from 'react-redux'
+import { Button, Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import {addPost} from '../store';
+import {connect} from 'react-redux';
 
 class CreatePost extends React.Component{
     constructor(props){
-        super(props)
-        this.state = {
-            subjectLine: '',
-            content: '',
-            userId: 1,
-            pieceId: 2
+        super(props);
+        if (props.user && props.piece) {
+            this.state = {
+                content: '',
+                userId: props.user.id,
+                pieceId: props.piece.id
+            };
+        } else {
+            this.state = {
+                content: ''
+            };
         }
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
-    handleSubmit(event){
-        // event.preventDefault()
-        const { addPost } = this.props
-        addPost(this.state)
+    handleSubmit(userId, pieceId){
+        this.props.addPost(this.state);
+        this.setState({content: ''});
     }
     render(){
-        return(
-            <View style = {styles.view}>
-            <View style = {styles.header}>
-            <Text style={{
-                //fontFamily: 'Georgia',
-        fontSize: 30,}}>
-        Make A Post</Text>
-        </View>
-            <View style={styles.subject}>
-                <TextInput
-                style = {{height: 12}}
-                placeholder = 'Subject Line'
-                onChangeText = {(subjectLine) => this.setState({subjectLine})}
-                />
-                </View>
-                <View style={styles.space}/>
+        return (
+            <View style={styles.view}>
                 <View style={styles.content}>
-                <TextInput
-                style={{height: 80}}
-                placeholder = "Join the Conversation"
-                multiline = {true}
-                onChangeText = {(content) => this.setState({content})}
-                />
+                    <TextInput
+                        placeholder="Join the Conversation..."
+                        value={this.state.content}
+                        multiline={true}
+                        underlineColorAndroid="transparent"
+                        autoCorrect={false}
+                        onChangeText={(content) => this.setState({ content })}
+                    />
                 </View>
                 <View>
-                <Button
-                raised
-                title = 'Hit It'
-                color= "#841584"
-                onPress = {() => this.handleSubmit()}
-                />
+                    <TouchableOpacity onPress={() => this.handleSubmit()}>
+                        <View style={styles.addPostButton}>
+                            <Text style={{color: 'white'}}>Add Post</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
-        )
+        );
     }
 }
 
 const styles = StyleSheet.create({
-    view: {
-        paddingTop: 50
-    },
-    header: {
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingBottom: 10
-    },
-    subject: {
-        paddingTop: 5,
-        paddingBottom: 5,
-        borderWidth: 2,
-        paddingLeft: 8,
-        borderColor: 'black',
-        marginLeft: 20,
-        marginRight: 20
-    },
-    space: {
-        paddingTop: 10
-    },
     content: {
         paddingTop: 5,
         paddingBottom: 5,
-        borderWidth: 2,
+        borderWidth: 1,
         paddingLeft: 8,
         borderColor: 'black',
         marginLeft: 20,
-        marginRight: 20
-    }
-})
+        marginRight: 20,
+        marginBottom: 8
+    },
+    addPostButton: {
+        backgroundColor: '#4286f4',
+        padding: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 20,
+        marginBottom: 20
 
+    }
+});
+
+const mapState = state => ({
+    user: state.user,
+    piece: state.piece
+});
 
 const mapDispatch = (dispatch) => ({
-    addPost: (post) => 
+    addPost: (post) =>
         dispatch(addPost(post))
-})
+});
 
-export default connect(null, mapDispatch)(CreatePost)
+export default connect(mapState, mapDispatch)(CreatePost);

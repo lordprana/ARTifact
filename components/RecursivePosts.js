@@ -6,6 +6,9 @@ import {connect} from 'react-redux';
 class RecursivePosts extends React.Component{
     constructor(props) {
         super(props);
+        this.state = {
+            replyContent: ''
+        }
     }
 
     updateVotes(post, votes){
@@ -34,6 +37,15 @@ class RecursivePosts extends React.Component{
                             <Text
                                 style={{ fontSize: 14 }}>{item.content}</Text>
                             <View style={styles.votesAndIcons}>
+                                <TouchableOpacity
+                                    style={{
+                                        marginRight: 10
+                                    }}
+                                    onPress={() => this.props.touchReply(item.id)}>
+                                    <Image
+                                        source={require('../resources/icons/reply.png')}
+                                    />
+                                </TouchableOpacity>
                                 <TouchableOpacity onPress={() => this.updateVotes(item, item.votes + 1)}>
                                     <Image
                                         source={require('../resources/icons/up-arrow-grey.png')}
@@ -59,8 +71,11 @@ class RecursivePosts extends React.Component{
                                         }} />
                                 </TouchableOpacity>
                             </View>
-                            <RecursivePosts posts={this.props.posts} editPost={this.props.editPost}
-                                parentId={item.id} depth={this.props.depth + 1} />
+                            <RecursivePosts
+                                posts={this.props.posts}
+                                editPost={this.props.editPost}
+                                parentId={item.id}
+                                touchReply={this.props.touchReply} />
                         </View>
                     ))
                 }
