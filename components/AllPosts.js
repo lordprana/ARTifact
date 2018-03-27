@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import { fetchPosts, editPost, addPost } from '../store/posts';
 import RecursivePosts from './RecursivePosts';
 import CreatePost from './CreatePost';
+import FullWidthImage from './FullWidthImage';
 class AllPosts extends React.Component {
   constructor(props) {
     super(props);
@@ -74,6 +75,11 @@ class AllPosts extends React.Component {
             by {this.props.piece.artist.name}
           </Text>
           <ScrollView>
+            { this.props.piece.pictureUrl &&
+              <FullWidthImage
+                style={styles.image}
+                source={{uri: this.props.piece.pictureUrl}} />
+            }
             <CreatePost />
             <RecursivePosts
               editPost={this.props.editPost}
@@ -128,7 +134,10 @@ const styles = StyleSheet.create({
     artistName: {
         fontSize: 19,
         textAlign: 'center',
-        marginBottom: 25
+        marginBottom: 12
+    },
+    image: {
+      marginBottom: 15
     }
 
   });
