@@ -21,10 +21,6 @@ class AllPosts extends React.Component {
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
   }
 
-  componentDidMount() {
-    this.props.fetchPosts();
-  }
-
   componentWillUnmount () {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
@@ -68,6 +64,7 @@ class AllPosts extends React.Component {
   }
 
   render() {
+    console.log('POSTS', this.props.posts);
     return (
       <View style={styles.view}>
           <Text style={styles.pieceName}>{this.props.piece.name}</Text>
