@@ -20,7 +20,7 @@ class AllPosts extends React.Component {
           <Text style={styles.artistName}>
             by {this.props.piece.artist.name}
           </Text>
-          <RecursivePosts editPosts={this.props.editPost} posts={this.props.posts} parentId={null} depth={0} />
+          <RecursivePosts editPost={this.props.editPost} posts={this.props.posts} parentId={null} depth={0} />
         </ScrollView>
       </View>
     );

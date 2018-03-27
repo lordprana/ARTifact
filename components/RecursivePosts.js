@@ -1,21 +1,11 @@
 import React from 'react';
-import { StyleSheet, FlatList, Button, Text, View, TextInput, ScrollView, Image, TouchableHighlight } from 'react-native';
+import { StyleSheet, FlatList, Button, Text, View, TextInput, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { fetchPosts, editPost } from '../store/posts';
 import {connect} from 'react-redux';
 
 class RecursivePosts extends React.Component{
     constructor(props) {
         super(props);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.filteredPosts = nextProps.posts.filter(post => post.parentId === this.props.parentId);
-        this.sortedPostsVotes = this.filteredPosts.sort(function(a, b) {
-            return b.votes - a.votes;
-        });
-        this.sortedPostsTime = this.filteredPosts.sort(function(a, b) {
-            return Number(b.createdAt) - Number(a.createdAt);
-        });
     }
 
     updateVotes(post, votes){
@@ -29,54 +19,55 @@ class RecursivePosts extends React.Component{
     }
 
     render() {
+        this.filteredPosts = this.props.posts.filter(post => post.parentId === this.props.parentId);
+        this.sortedPostsVotes = this.filteredPosts.sort(function(a, b) {
+            return b.votes - a.votes;
+        });
+        this.sortedPostsTime = this.filteredPosts.sort(function(a, b) {
+            return Number(b.createdAt) - Number(a.createdAt);
+        });
         return (
             <View style={styles.mainView}>
-                <FlatList
-                    data={this.sortedPostsVotes}
-                    keyExtractor={(item, index) => index}
-                    renderItem={({ item }) => {
-                        return (
-                            <View
-                                key={item.id}
-                                style={styles.postContainer}
-                            >
-                                <Text
-                                    style={{ fontSize: 14 }}>{item.content}</Text>
-                                    <View style={styles.votesAndIcons}>
-                                    <TouchableHighlight onPress={() => this.updateVotes(item, item.votes + 1)}>
-                                        <Image
-                                            source={require('../resources/icons/up-arrow-grey.png')}
-                                            style={{ width: 22, height: 22 }}
-                                        />
-                                    </TouchableHighlight>
-                                    <View style={styles.vote}>
-                                        <Text style={{
-                                            flex: 1,
-                                            justifyContent: 'center'
-                                        }}>
-                                            {item.votes}</Text>
-                                    </View>
-                                    <TouchableHighlight
-                                        onPress={() => this.updateVotes(item, item.votes - 1)}>
-                                        <Image
-                                            source={require('../resources/icons/up-arrow-grey.png')}
-                                            style={{ width: 22, height: 22,
+                {
+                    this.sortedPostsVotes && this.sortedPostsVotes.map(item => (
+                        <View key={item.id} style={styles.postContainer} >
+                            <Text
+                                style={{ fontSize: 14 }}>{item.content}</Text>
+                            <View style={styles.votesAndIcons}>
+                                <TouchableOpacity onPress={() => this.updateVotes(item, item.votes + 1)}>
+                                    <Image
+                                        source={require('../resources/icons/up-arrow-grey.png')}
+                                        style={{ width: 22, height: 22 }}
+                                    />
+                                </TouchableOpacity>
+                                <View style={styles.vote}>
+                                    <Text style={{
+                                        flex: 1,
+                                        justifyContent: 'center'
+                                    }}>
+                                        {item.votes}</Text>
+                                </View>
+                                <TouchableOpacity
+                                    onPress={() => this.updateVotes(item, item.votes - 1)}>
+                                    <Image
+                                        source={require('../resources/icons/up-arrow-grey.png')}
+                                        style={{
+                                            width: 22, height: 22,
                                             transform: [{
                                                 rotate: '180deg'
-                                            }] }} />
-                                    </TouchableHighlight>
-                                </View>
-                                <RecursivePosts key={item.id} posts={this.props.posts} editPost={this.props.editPost}
-                                 parentId={item.id} depth={this.props.depth + 1} />
+                                            }]
+                                        }} />
+                                </TouchableOpacity>
                             </View>
-
-                        );
-                    }
-                    }
-                />
+                            <RecursivePosts posts={this.props.posts} editPost={this.props.editPost}
+                                parentId={item.id} depth={this.props.depth + 1} />
+                        </View>
+                    ))
+                }
             </View>
         );
     }
+
 }
 
 
