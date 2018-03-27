@@ -30,7 +30,7 @@ class DisambiguatePicker extends React.Component {
               ),
               NavigationActions.navigate(
                 {
-                  routeName: 'fakeForum',
+                  routeName: 'AllPosts',
                 }
               )
             ]

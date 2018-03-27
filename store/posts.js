@@ -21,6 +21,7 @@ const createPost = (post) => {
     };
 };
 
+
 const updatePost = (post) => {
     return {
         type: UPDATE_POST,
@@ -54,6 +55,7 @@ export function addPost(post){
         .catch(err => console.error(`Creating ${post} unsuccessful`, err));
     };
 }
+
 
 export function editPost(post, id){
     return function thunk(dispatch){
