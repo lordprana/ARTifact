@@ -52,6 +52,22 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50
   },
+  switchCameraButton: {
+    position: 'absolute',
+    bottom: softMenuBarHeight + Dimensions.get('screen').height * 0.03,
+    left: Dimensions.get('screen').width * 0.03,
+    padding: 10
+  },
+  switchCameraBackground: {
+    backgroundColor: '#00246F',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: 100,
+    shadowColor: 'black',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 1,
+    elevation: 3,
+  },
   disambiguateContainer: {
     marginTop: Constants.statusBarHeight,
     flex: 1,
