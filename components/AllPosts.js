@@ -42,13 +42,8 @@ class AllPosts extends React.Component {
   }
 
   touchReply = (parentId) => {
-    Animated.timing(
-      this.replyPosition,
-      {
-        toValue: 0
-      }
-    ).start();
     this.setState({replyParent: parentId});
+    this.replyField.focus();
   }
 
   handleSubmitReply() {
@@ -102,7 +97,11 @@ class AllPosts extends React.Component {
               style={styles.image}
               source={{ uri: this.props.piece.pictureUrl }} />
           }
-          <CreatePost />
+          <TouchableOpacity onPress={() => this.touchReply(null)}>
+            <View style={styles.addPostButton}>
+              <Text style={{ color: 'white' }}>Add Post</Text>
+            </View>
+          </TouchableOpacity>
           <RecursivePosts
             editPost={this.props.editPost}
             posts={this.props.posts}
@@ -121,13 +120,14 @@ class AllPosts extends React.Component {
           paddingHorizontal: 5
         }}>
           <TextInput
-            placeholder="Reply..."
+            placeholder="Add post..."
             value={this.state.replyContent}
             multiline={true}
             underlineColorAndroid="transparent"
             autoCorrect={false}
             onChangeText={(replyContent) =>
               this.setState({ replyContent })}
+            ref={ref => {this.replyField = ref}}
             style={{
               flex: 1
             }}
@@ -166,6 +166,15 @@ const styles = StyleSheet.create({
       top: 5,
       right: 10,
       zIndex: 1
+    },
+    addPostButton: {
+        backgroundColor: '#4286f4',
+        padding: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 20,
+        marginBottom: 20
+
     }
 
   });
