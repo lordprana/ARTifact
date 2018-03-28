@@ -4,7 +4,7 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { Camera, Permissions, ImageManipulator } from 'expo';
 import axios from 'axios';
 // import { connect } from 'react-redux';
-// import { NavigationActions } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import styles from '../styles';
 import { backEndAddress } from '../config';
 // import { stockPiece, getPosts } from '../store';
@@ -35,20 +35,24 @@ class Selfie extends React.Component {
 
   async snap() {
     if (this.camera) {
-      console.log('Taking photo');
+      console.log('Taking photo')
+      this.props.navigation.navigate('LoadingScreen')
       const bigPhoto = await this.camera.takePictureAsync({ quality: 1 })
       const smallPhoto = await ImageManipulator.manipulate(
         bigPhoto.uri,
         [{ resize: { height: 800 } }],
         { compress: 0.8, base64: true }
       )
-      const styledResponse = await axios.post(`${backEndAddress}/api/style-image`, {
-        style: 'udnie',
-        photo: smallPhoto.base64,
-      })
-      const styledImage = styledResponse.data
-      this.setState({ styledImage })
-      // this.props.navigation.navigate('LoadingScreen');
+      try {
+        const styledResponse = await axios.post(`${backEndAddress}/api/style-image`, {
+          style: 'udnie',
+          photo: smallPhoto.base64,
+        })
+        const styled64 = styledResponse.data
+        this.props.navigation.navigate('StyledViewer', { styled64 })
+      } catch (err) {
+        this.props.navigation.dispatch(NavigationActions.back())
+      }
     }
   }
 // 'data:image/jpeg;base64,' + this.state.styledImage
@@ -70,7 +74,6 @@ class Selfie extends React.Component {
             <Text style={styles.ocrText}>
               Take a picture to have it styled
             </Text>
-            {this.state.styledImage ? <Image source={{ uri: 'data:image/jpeg;base64,' + this.state.styledImage }} style={{ width: 360, height: 640 }} /> : null}
             <View
               style={{
                 flex: 1,
