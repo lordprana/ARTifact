@@ -2,8 +2,6 @@ import React from 'react';
 import { Text, View, Image } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import LoginScreen from './LoginScreen';
-import fakeForum from './fakeForum';
-import fakeMuseum from './fakeMuseum';
 import swiper from './swiper';
 import DisambiguatePicker from './DisambiguatePicker';
 import Noneidentified from './NoneIdentified';
@@ -16,9 +14,6 @@ const Stack = StackNavigator({
   },
   swiper: {
     screen: swiper
-  },
-  fakeForum: {
-    screen: fakeForum
   },
   DisambiguatePicker: {
     screen: DisambiguatePicker
