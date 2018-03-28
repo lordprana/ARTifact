@@ -2,24 +2,49 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { getSavedPieces } from '../store/user';
+import { NavigationActions } from 'react-navigation';
+import { getSavedPieces, stockPiece, getPosts } from '../store';
 import styles from '../styles';
 import { backEndAddress } from '../config';
 
+const handlePiecePress = (stockPosts, stockPiece, piece, navigation) => () => {
+  stockPosts(piece.posts);
+  delete piece.posts;
+  stockPiece(piece);
+  navigation.dispatch(
+    NavigationActions.reset(
+      {
+        index: 1,
+        actions: [
+          NavigationActions.navigate(
+            {
+              routeName: 'swiper'
+            }
+          ),
+          NavigationActions.navigate(
+            {
+              routeName: 'AllPosts',
+            }
+          )
+        ]
+      })
+  );
+};
+
 const Pieces = props => (
-  <View style={styles.savedPiece}>
-    <View style={styles.savedPieceSeparator}>
-      <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/1/17/Rhinos_Chauvet_Cave.jpg' }} style={styles.savedPiecePic} />
-      <View style={styles.savedPieceTextContainer}>
-        <Text style={styles.savedPieceTitle}>{props.piece.name}</Text>
-        <Text style={styles.savedPieceText}>Artist Name</Text>
-        <Text style={styles.savedPieceText}>{props.piece.year}</Text>
+  <TouchableOpacity onPress={handlePiecePress(props.stockPosts, props.stockPiece, props.piece, props.navigation)}>
+    <View style={styles.savedPiece}>
+      <View style={styles.savedPieceSeparator}>
+        <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/1/17/Rhinos_Chauvet_Cave.jpg' }} style={styles.savedPiecePic} />
+        <View style={styles.savedPieceTextContainer}>
+          <Text style={styles.savedPieceTitle}>{props.piece.name}</Text>
+          <Text style={styles.savedPieceText}>Artist Name</Text>
+          <Text style={styles.savedPieceText}>{props.piece.year}</Text>
+        </View>
       </View>
-    </View>
-    <TouchableOpacity style={{alignSelf: 'center'}}>
       <Image source={require('../resources/icons/right-arrow.png')} style={styles.tempArrow} />
-    </TouchableOpacity>
-  </View>
+    </View>
+  </TouchableOpacity>
 );
 
 class UserPage extends React.Component {
@@ -27,7 +52,7 @@ class UserPage extends React.Component {
     super();
     this.state = {
       recommendations: null
-    }
+    };
   }
 
   componentDidMount() {
@@ -47,11 +72,21 @@ class UserPage extends React.Component {
         <ScrollView style={{flexGrow: 1}}>
           <Text style={styles.userPageSubtitle}>Recommended works</Text>
           {this.state.recommendations && this.state.recommendations.map(piece => (
-            <Pieces key={piece.id} piece={piece} />
+            <Pieces
+              key={piece.id}
+              piece={piece}
+              stockPosts={this.props.stockPosts}
+              stockPiece={this.props.stockPiece}
+              navigation={this.props.navigation} />
           ))}
           <Text style={styles.userPageSubtitle}>Saved works</Text>
           {this.props.savedPieces && this.props.savedPieces.map(piece => (
-            <Pieces key={piece.id} piece={piece} />
+            <Pieces
+              key={piece.id}
+              piece={piece}
+              stockPosts={this.props.stockPosts}
+              stockPiece={this.props.stockPiece}
+              navigation={this.props.navigation} />
           )
           )}
         </ScrollView>
@@ -67,6 +102,8 @@ const mapState = state => ({
 });
 const mapDispatch = dispatch => ({
   getSavedPieces: () => dispatch(getSavedPieces()),
+  stockPosts: posts => dispatch(getPosts(posts)),
+  stockPiece: piece => dispatch(stockPiece(piece))
 });
 
 export default connect(mapState, mapDispatch)(UserPage);
