@@ -1,19 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Image, Animated, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Image, Animated, Keyboard } from 'react-native';
 import {connect} from 'react-redux';
-import { fetchPosts, editPost, addPost } from '../store/posts';
+import { fetchPosts, editPost, addPost, postSavedPiece, deleteSavedPiece } from '../store';
 import RecursivePosts from './RecursivePosts';
 import CreatePost from './CreatePost';
 import FullWidthImage from './FullWidthImage';
 class AllPosts extends React.Component {
   constructor(props) {
     super(props);
+
+    let isFavoritePiece = !!props.user.pieces.filter(piece => {
+      return props.piece.id === piece.id;
+    }).length;
+
     this.state = {
       replyParent: null,
-      replyContent: ''
+      replyContent: '',
+      favorited: isFavoritePiece
     };
     this.replyPosition = new Animated.Value(-50);
     this.touchReply = this.touchReply.bind(this);
+    this.handleFavoriteTouch = this.handleFavoriteTouch.bind(this);
   }
 
   componentWillMount() {
@@ -63,55 +70,74 @@ class AllPosts extends React.Component {
     Keyboard.dismiss();
   }
 
+  handleFavoriteTouch() {
+    console.log('HANDLE TOUCH');
+    if (this.state.favorited) this.props.deleteSavedPiece(this.props.piece);
+    else this.props.postSavedPiece(this.props.piece);
+
+    this.setState({
+      favorited: !this.state.favorited
+    });
+  }
+
   render() {
     return (
       <View style={styles.view}>
-          <Text style={styles.pieceName}>{this.props.piece.name}</Text>
-          <Text style={styles.artistName}>
-            by {this.props.piece.artist.name}
-          </Text>
-          <ScrollView>
-            { this.props.piece.pictureUrl &&
-              <FullWidthImage
-                style={styles.image}
-                source={{uri: this.props.piece.pictureUrl}} />
+        <View style={styles.heartTouchable}>
+          <TouchableWithoutFeedback onPress={() => this.handleFavoriteTouch()}>
+            {
+              this.state.favorited
+                ? <Image source={require('../resources/icons/heart-full.png')} />
+                : <Image source={require('../resources/icons/heart-outline.png')} />
             }
-            <CreatePost />
-            <RecursivePosts
-              editPost={this.props.editPost}
-              posts={this.props.posts}
-              parentId={null}
-              touchReply={this.touchReply} />
-          </ScrollView>
-          { /* Reply text field */}
-          <Animated.View style={{
-            position: 'absolute',
-            bottom: this.replyPosition,
-            flexDirection: 'row',
-            backgroundColor: 'white',
-            borderTopWidth: 1,
-            borderColor: 'black',
-            paddingVertical: 5,
-            paddingHorizontal: 5
-          }}>
-            <TextInput
-              placeholder="Reply..."
-              value={this.state.replyContent}
-              multiline={true}
-              underlineColorAndroid="transparent"
-              autoCorrect={false}
-              onChangeText={(replyContent) =>
-                this.setState({ replyContent })}
-              style={{
-                flex: 1
-              }}
+          </TouchableWithoutFeedback>
+        </View>
+        <Text style={styles.pieceName}>{this.props.piece.name}</Text>
+        <Text style={styles.artistName}>
+          by {this.props.piece.artist.name}
+        </Text>
+        <ScrollView>
+          {this.props.piece.pictureUrl &&
+            <FullWidthImage
+              style={styles.image}
+              source={{ uri: this.props.piece.pictureUrl }} />
+          }
+          <CreatePost />
+          <RecursivePosts
+            editPost={this.props.editPost}
+            posts={this.props.posts}
+            parentId={null}
+            touchReply={this.touchReply} />
+        </ScrollView>
+        { /* Reply text field */}
+        <Animated.View style={{
+          position: 'absolute',
+          bottom: this.replyPosition,
+          flexDirection: 'row',
+          backgroundColor: 'white',
+          borderTopWidth: 1,
+          borderColor: 'black',
+          paddingVertical: 5,
+          paddingHorizontal: 5
+        }}>
+          <TextInput
+            placeholder="Reply..."
+            value={this.state.replyContent}
+            multiline={true}
+            underlineColorAndroid="transparent"
+            autoCorrect={false}
+            onChangeText={(replyContent) =>
+              this.setState({ replyContent })}
+            style={{
+              flex: 1
+            }}
+          />
+          <TouchableOpacity onPress={() => this.handleSubmitReply()}>
+            <Image
+              source={require('../resources/icons/send-button.png')}
             />
-            <TouchableOpacity onPress={() => this.handleSubmitReply()}>
-              <Image
-                source={require('../resources/icons/send-button.png')}
-              />
-            </TouchableOpacity>
-          </Animated.View>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
     );
   }
@@ -121,7 +147,7 @@ class AllPosts extends React.Component {
 const styles = StyleSheet.create({
     view: {
         marginTop: 25,
-        flex: 1
+        flex: 1,
     },
     pieceName: {
         fontSize: 25,
@@ -134,21 +160,29 @@ const styles = StyleSheet.create({
     },
     image: {
       marginBottom: 15
+    },
+    heartTouchable: {
+      position: 'absolute',
+      top: 5,
+      right: 10,
+      zIndex: 1
     }
 
   });
 
-mapStateToProps = state => ({
+const mapStateToProps = state => ({
     posts: state.posts,
     piece: state.piece,
     user: state.user
 });
 
-  const mapDispatchToProps = dispatch => ({
-    fetchPosts: () => dispatch(fetchPosts()),
-    editPost: (post, id) => dispatch(editPost(post, id)),
-    addPost: (post) => dispatch(addPost(post))
-  });
+const mapDispatchToProps = dispatch => ({
+  fetchPosts: () => dispatch(fetchPosts()),
+  editPost: (post, id) => dispatch(editPost(post, id)),
+  addPost: (post) => dispatch(addPost(post)),
+  deleteSavedPiece: (piece) => dispatch(deleteSavedPiece(piece)),
+  postSavedPiece: (piece) => dispatch(postSavedPiece(piece))
+});
 
   export default connect(mapStateToProps, mapDispatchToProps)(AllPosts);
 
