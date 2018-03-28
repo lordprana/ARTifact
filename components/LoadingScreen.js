@@ -51,8 +51,8 @@ export default class LoadingScreen extends React.Component {
             }
           ));
         }
-        Animated.parallel(animations).start();
       });
+      Animated.parallel(animations).start();
     }, 4000);
   }
 
