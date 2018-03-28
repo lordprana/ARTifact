@@ -11,7 +11,6 @@ import { stockPiece, getPosts } from '../store';
 import LoadingScreen from './LoadingScreen';
 import DisambiguatePicker from './DisambiguatePicker';
 
-
 class OCR extends React.Component {
   constructor() {
     super();
@@ -19,6 +18,7 @@ class OCR extends React.Component {
     this.state = {
       hasCameraPermission: null,
       type: Camera.Constants.Type.back,
+      ratio: '16:9',
     };
 
     this.camera = null;
@@ -85,13 +85,13 @@ class OCR extends React.Component {
             this.props.navigation.dispatch(
               NavigationActions.reset(
                 {
-                  index: 1,
+                  index: 0, // 1
                   actions: [
-                    NavigationActions.navigate(
-                      {
-                        routeName: 'swiper'
-                      }
-                    ),
+                    // NavigationActions.navigate(
+                    //   {
+                    //     routeName: 'swiper'
+                    //   }
+                    // ),
                     NavigationActions.navigate(
                       {
                         routeName: 'AllPosts',
@@ -107,13 +107,13 @@ class OCR extends React.Component {
             this.props.navigation.dispatch(
               NavigationActions.reset(
                 {
-                  index: 1,
+                  index: 0, // 1
                   actions: [
-                    NavigationActions.navigate(
-                      {
-                        routeName: 'swiper'
-                      }
-                    ),
+                    // NavigationActions.navigate(
+                    //   {
+                    //     routeName: 'swiper'
+                    //   }
+                    // ),
                     NavigationActions.navigate(
                       {
                         routeName: 'NoneIdentified',
@@ -139,9 +139,14 @@ class OCR extends React.Component {
     } else if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     } else {
+      console.log('VISIBLE:', this.state.visible)
       return (
         <View style={{ flex: 1 }}>
-          <Camera style={styles.ocrCamera} type={this.state.type} ref={ref => {this.camera = ref;}} >
+          <Camera
+            style={styles.ocrCamera}
+            type={this.state.type}
+            ratio={this.state.ratio}
+            ref={ref => { this.camera = ref; }} >
             <Text style={styles.ocrText}>
               Take a picture of the art plaque to join the conversation about the piece
             </Text>
@@ -156,7 +161,7 @@ class OCR extends React.Component {
                 onPress={this.snap}>
                 <View style={styles.ocrButtonBackground}>
                   <Image
-style={styles.ocrButtonIcon}
+                    style={styles.ocrButtonIcon}
                     source={require('../resources/icons/photo-camera.png')}
                   />
                 </View>

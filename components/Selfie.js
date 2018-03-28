@@ -69,8 +69,8 @@ class Selfie extends React.Component {
             style={styles.ocrCamera}
             type={this.state.type}
             ratio={this.state.ratio}
-            ref={ref => {this.camera = ref}}
-            >
+            ref={ref => { this.camera = ref }}
+          >
             <Text style={styles.ocrText}>
               Take a picture to have it styled
             </Text>
