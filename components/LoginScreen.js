@@ -65,11 +65,11 @@ class Auth extends React.Component {
   async getLocation() {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
     this.setState({ hasLocationPermission: status === 'granted' });
-    Location.getCurrentPositionAsync({ enableHighAccuracy: true })
+    return Location.getCurrentPositionAsync({ enableHighAccuracy: true })
       .then(result => {
         const latitude = result.coords.latitude;
         const longitude = result.coords.longitude;
-        this.props.getMuseumNearMe(latitude, longitude)
+        return this.props.getMuseumNearMe(latitude, longitude)
       })
   }
 

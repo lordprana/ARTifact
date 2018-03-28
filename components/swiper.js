@@ -14,7 +14,7 @@ export default class Navigation extends React.Component {
           showsPagination={true}
           index={1}>
           <View style={{flex: 1}}>
-            <MuseumPage />
+            <MuseumPage navigation={this.props.navigation} />
           </View>
             <View >
               <OCR navigation={this.props.navigation} />
