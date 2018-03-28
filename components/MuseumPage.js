@@ -53,7 +53,7 @@ class MuseumPage extends Component {
             Most Active Pieces
           </Text>
         </View>
-        <ScrollView>
+        <ScrollView style={{flexGrow: 1}}>
           <View style={styles.postContainer}>
           {this.topPieces}
           </View>
@@ -65,7 +65,8 @@ class MuseumPage extends Component {
 
 const styles = StyleSheet.create({
   masterView: {
-    backgroundColor: 'cornsilk'
+    backgroundColor: 'cornsilk',
+    flex: 1
   },
   imageStyle: {
     maxHeight: 25,
