@@ -7,6 +7,8 @@ import DisambiguatePicker from './DisambiguatePicker';
 import Noneidentified from './NoneIdentified';
 import LoadingScreen from './LoadingScreen';
 import AllPosts from './AllPosts';
+import Selfie from './Selfie';
+import StyledViewer from './StyledViewer';
 // remove stacknavigator museum screen.
 const Stack = StackNavigator({
   LoginScreen: {
@@ -26,7 +28,13 @@ const Stack = StackNavigator({
   },
   AllPosts: {
     screen: AllPosts
-  }
+  },
+  Selfie: {
+    screen: Selfie
+  },
+  StyledViewer: {
+    screen: StyledViewer
+  },
 },
   {
     initialRouteName: 'LoginScreen',

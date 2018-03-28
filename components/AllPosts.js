@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Image, Animated, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Image, Animated, Keyboard, Button } from 'react-native';
 import {connect} from 'react-redux';
 import { fetchPosts, editPost, addPost, postSavedPiece, deleteSavedPiece } from '../store';
 import RecursivePosts from './RecursivePosts';
@@ -91,6 +91,7 @@ class AllPosts extends React.Component {
         <Text style={styles.artistName}>
           by {this.props.piece.artist.name}
         </Text>
+        <Button title="Take a selfie in this style" onPress={() => this.props.navigation.navigate('Selfie')} />
         <ScrollView>
           {this.props.piece.pictureUrl &&
             <FullWidthImage
