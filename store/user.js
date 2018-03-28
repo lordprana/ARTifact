@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 import axios from 'axios';
 import { backEndAddress } from '../config';
 
-const setAxiosHeaders = uuid => {axios.defaults.headers.common.Authorization = `Bearer ${uuid}`};
+const setAxiosHeaders = uuid => {axios.defaults.headers.common.Authorization = `Bearer ${uuid}`;};
 const hasHeaders = () => axios.defaults.headers.common.Authorization.startsWith('Bearer');
 
 const STOCK_UUID = 'STOCK_UUID';
@@ -24,53 +24,45 @@ export const stockUserInfo = info => ({
   info,
 });
 
-// const stockSavedPieces = pieces => ({
-//   type: STOCK_SAVED_PIECES,
-//   pieces,
-// })
-
 const addPiece = piece => ({
   type: ADD_PIECE,
   piece,
-})
+});
 
 const removePiece = piece => ({
   type: REMOVE_PIECE,
   piece,
-})
-
-// export const getSavedPieces = () =>
-//   dispatch => {
-//   if (!hasHeaders()) return console.error('auth header not set')
-//   axios.get(`${backEndAddress}/api/users/my-pieces`)
-//   .then(res => res.data)
-//   .then(pieces => {
-//     console.log('pieces are:', pieces)
-//     dispatch(stockSavedPieces(pieces))
-//   })
-// }
+});
 
 export const postSavedPiece = piece =>
   dispatch => {
-    if (!hasHeaders()) return console.error('auth header not set')
-    axios.get(`${backEndAddress}/api/users/add-piece`, piece)
+    if (!hasHeaders()) return console.error('auth header not set');
+    axios.post(`${backEndAddress}/api/users/add-piece`, piece)
   .then(res => res.data)
-  .then(pieceInDb => dispatch(addPiece(pieceInDb)))
-  }
+  .then(pieceInDb => dispatch(addPiece(pieceInDb)));
+  };
+
+export const deleteSavedPiece = piece =>
+  dispatch => {
+    if (!hasHeaders()) return console.error('auth header not set');
+    axios.post(`${backEndAddress}/api/users/remove-piece`, piece)
+      .then(res => res.data)
+      .then(() => dispatch(removePiece(piece)));
+  };
 
 export const getUuidFromStorage = () =>
   dispatch =>
     AsyncStorage.getItem('uuid')
     .then(uuid => {
-      console.log('UUID', uuid)
+      console.log('UUID', uuid);
       if (uuid) {
         return dispatch(stockUuid(uuid));
       } else {
         return null;
       }
     })
-    .catch(() => { console.log('HERE')
-      return null}
+    .catch(() => { console.log('HERE');
+      return null;}
 );
 
 export const setUuid = uuid =>
@@ -132,17 +124,20 @@ const userReducer = (state = initialState, action) => {
         pieces: action.info.pieces
       };
 
-    // case STOCK_SAVED_PIECES:
-    //   return {
-    //     ...state,
-    //     pieces: action.pieces,
-    //   }
-
     case ADD_PIECE:
-    return {
-      ...state,
-      pieces: [...state.pieces, action.piece],
-    }
+      return {
+        ...state,
+        pieces: [...state.pieces, action.piece],
+      };
+
+    case REMOVE_PIECE:
+      let newPieces = state.pieces.filter(piece => {
+        return piece.id !== action.piece.id;
+      });
+      return {
+        ...state,
+        pieces: newPieces
+      };
 
     default:
       return state;

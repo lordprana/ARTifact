@@ -39,7 +39,7 @@ export default class FakeCam extends React.Component {
             <View >
               <OCR navigation={this.props.navigation} />
             </View>
-          <UserPage />
+          <UserPage navigation={this.props.navigation} />
         </Swiper>
       )
   }
