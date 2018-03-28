@@ -67,7 +67,7 @@ export const getUuidFromStorage = () =>
 
 export const setUuid = uuid =>
   dispatch => {
-    AsyncStorage.setItem('uuid', uuid)
+    return AsyncStorage.setItem('uuid', uuid)
     .then(() => {
       dispatch(stockUuid(uuid));
     })
@@ -88,8 +88,8 @@ export const loginWithToken = token =>
     axios.post(`${backEndAddress}/auth/facebook`, { token })
     .then(res => res.data)
     .then(info => {
-      dispatch(setUuid(info.uuid));
       dispatch(stockUserInfo(info));
+      return dispatch(setUuid(info.uuid));
     });
 
 
