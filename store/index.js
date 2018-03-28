@@ -10,7 +10,7 @@ import museum from './museum';
 const reducer = combineReducers({ user, posts, piece, museum });
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
-  createLogger({collapsed: true})
+  // createLogger({collapsed: true})
 ));
 const store = createStore(reducer, middleware);
 
