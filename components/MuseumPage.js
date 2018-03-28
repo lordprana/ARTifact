@@ -25,8 +25,8 @@ class MuseumPage extends Component {
   get topPieces() {
     if (!this.props.pieces) return null
     return this.props.pieces.map(piece => (
-      <TouchableOpacity onPress={this.handlePiecePress(piece)}>
-        <View key={piece.id} style={styles.postView}>
+      <TouchableOpacity key={piece.id} onPress={this.handlePiecePress(piece)}>
+        <View  style={styles.postView}>
           <Text style={styles.pieceName}>{piece && piece.name}</Text>
           <View style={styles.imageAndContent}>
             <Image
@@ -34,7 +34,7 @@ class MuseumPage extends Component {
               source={{ uri: piece.pictureUrl }}
             />
             <Text style={styles.textContent}>
-              {piece.posts[0].content.slice(0, 95) + " ..."}
+              { piece.posts && piece.posts.length && piece.posts[0].content.slice(0, 95) + " ..."}
             </Text>
           </View>
         </View>
@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
   },
   postsHeader: {
     fontSize: 20,
-    fontFamily: 'Georgia'
   },
   image: {
     width: 75,
