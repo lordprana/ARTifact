@@ -61,14 +61,16 @@ class RecursivePosts extends React.Component{
                                 </View>
                                 <TouchableOpacity
                                     onPress={() => this.updateVotes(item, item.votes - 1)}>
-                                    <Image
-                                        source={require('../resources/icons/up-arrow-grey.png')}
-                                        style={{
-                                            width: 22, height: 22,
-                                            transform: [{
-                                                rotate: '180deg'
-                                            }]
-                                        }} />
+                                    <View>
+                                        <Image
+                                            source={require('../resources/icons/up-arrow-grey.png')}
+                                            style={{
+                                                width: 22, height: 22,
+                                                transform: [{
+                                                    rotate: '180deg'
+                                                }]
+                                            }} />
+                                    </View>
                                 </TouchableOpacity>
                             </View>
                             <RecursivePosts
