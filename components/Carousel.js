@@ -1,43 +1,39 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Image, StyleSheet, Dimensions } from 'react-native';
+import Swiper from 'react-native-swiper'
 
 const { width } = Dimensions.get('window');
-const height = width * 0.8;
+const height = width * 0.7;
 
 class Carousel extends Component {
   render() {
-      return (
-        <View
-          style={styles.scrollContainer}
-        >
-          <ScrollView
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
+      return <View style={styles.scrollContainer}>
+          <Swiper 
+          horizontal 
+          pagingEnabled = {true}
+          showsHorizontalScrollIndicator={false} 
+          autoplay={true}
+          autoplayTimeout= {7}
+          loop={true}
+          showsPagination={false}
           >
-            {/* {images.map(image => (
-              <Image style={styles.image} source={image} />
-            ))} */}
-            <View style={styles.imageView}>
-            <View style={styles.singleView} >
-            <Image style={styles.image} source={require('../public/img/Whitney-Deck-View.jpg')}/>
-            </View >
-            <View style={styles.singleView}>
-            <Image style={styles.image} source={require('../public/img/Whitney-Logo.jpg')}/>
-            </View>
-            <View style={styles.singleView}>
-            <Image style={styles.image} source={require('../public/img/Whitney-Exhibition.jpg')}/>
-            </View>
-            <View style={styles.singleView}>
-            <Image style={styles.image} source={require('../public/img/Whitney-Deck-View-2.jpg')}/>
-            </View>
-            <View style={styles.singleView}>
-            <Image style={styles.image} source={require('../public/img/Whitney-Exterior.jpg')}/>
-            </View>
-            </View>
-          </ScrollView>
-        </View>
-      );   
+              <View style={styles.singleView}>
+                <Image style={styles.image} source={require("../public/img/Whitney-Deck-View.jpg")} />
+              </View>
+              <View style={styles.singleView}>
+                <Image style={styles.image} source={require("../public/img/Whitney-Logo.jpg")} />
+              </View>
+              <View style={styles.singleView}>
+                <Image style={styles.image} source={require("../public/img/Whitney-Exhibition.jpg")} />
+              </View>
+              <View style={styles.singleView}>
+                <Image style={styles.image} source={require("../public/img/Whitney-Deck-View-2.jpg")} />
+              </View>
+              <View style={styles.singleView}>
+                <Image style={styles.image} source={require("../public/img/Whitney-Exterior.jpg")} />
+              </View>
+          </Swiper>
+        </View>;   
   }
 }
 
