@@ -1,8 +1,10 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Text, View, Image, TouchableOpacity } from 'react-native'
-import { getSavedPieces } from '../store/user'
+import React from 'react';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { getSavedPieces } from '../store/user';
 import styles from '../styles';
+import { backEndAddress } from '../config';
 
 const Pieces = props => (
   <View style={styles.savedPiece}>
@@ -18,34 +20,53 @@ const Pieces = props => (
       <Image source={require('../resources/icons/right-arrow.png')} style={styles.tempArrow} />
     </TouchableOpacity>
   </View>
-)
+);
 
-const UserPage = props => {
+class UserPage extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      recommendations: null
+    }
+  }
 
-  if (Object.keys(props).length < 3) return null
-  return (
-    <View>
-      <View style={styles.userHeader}>
-        <Text style={styles.userName}>{props.name}</Text>
-        <Image source={{ uri: props.pictureUrl }} style={styles.profilePic} />
+  componentDidMount() {
+    axios.get(`${backEndAddress}/api/recommendations`)
+    .then(res => res.data)
+    .then(recommendations => this.setState({recommendations}))
+    .catch(console.error.bind(console));
+  }
+
+  render() {
+    return (
+      <View style={{flex: 1}}>
+        <View style={styles.userHeader}>
+          <Text style={styles.userName}>{this.props.name}</Text>
+          <Image source={{ uri: this.props.pictureUrl }} style={styles.profilePic} />
+        </View>
+        <ScrollView style={{flexGrow: 1}}>
+          <Text style={styles.userPageSubtitle}>Recommended works</Text>
+          {this.state.recommendations && this.state.recommendations.map(piece => (
+            <Pieces key={piece.id} piece={piece} />
+          ))}
+          <Text style={styles.userPageSubtitle}>Saved works</Text>
+          {this.props.savedPieces && this.props.savedPieces.map(piece => (
+            <Pieces key={piece.id} piece={piece} />
+          )
+          )}
+        </ScrollView>
       </View>
-      <Text style={styles.userPageSubtitle}>Recommnded works</Text>
-      <Text style={styles.userPageSubtitle}>Saved works</Text>
-      {props.savedPieces && props.savedPieces.map(piece => (
-          <Pieces key={piece.id} piece={piece} />
-        )
-      )}
-    </View>
-  )
+    );
+  }
 }
 
 const mapState = state => ({
   name: state.user.name,
   pictureUrl: state.user.pictureUrl,
   savedPieces: state.user.pieces,
-})
+});
 const mapDispatch = dispatch => ({
   getSavedPieces: () => dispatch(getSavedPieces()),
-})
+});
 
-export default connect(mapState, mapDispatch)(UserPage)
+export default connect(mapState, mapDispatch)(UserPage);
