@@ -21,10 +21,6 @@ class AllPosts extends React.Component {
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide.bind(this));
   }
 
-  componentDidMount() {
-    this.props.fetchPosts();
-  }
-
   componentWillUnmount () {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
