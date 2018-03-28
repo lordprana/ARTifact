@@ -13,7 +13,7 @@ const LoginButton = props => {
       permissions: ['public_profile', 'email'],
     });
     if (type === 'success') {
-      props.loginWithToken(token);
+      await props.loginWithToken(token);
       props.navigation.dispatch(
         NavigationActions.reset(
           {

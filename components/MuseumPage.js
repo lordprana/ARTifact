@@ -25,8 +25,8 @@ class MuseumPage extends Component {
   get topPieces() {
     if (!this.props.pieces) return null
     return this.props.pieces.map(piece => (
-      <TouchableOpacity onPress={this.handlePiecePress(piece)}>
-        <View key={piece.id} style={styles.postView}>
+      <TouchableOpacity key={piece.id} onPress={this.handlePiecePress(piece)}>
+        <View  style={styles.postView}>
           <Text style={styles.pieceName}>{piece && piece.name}</Text>
           <View style={styles.imageAndContent}>
             <Image
@@ -34,7 +34,7 @@ class MuseumPage extends Component {
               source={{ uri: piece.pictureUrl }}
             />
             <Text style={styles.textContent}>
-              {piece.posts[0].content.slice(0, 95) + " ..."}
+              { piece.posts && piece.posts.length && piece.posts[0].content.slice(0, 95) + " ..."}
             </Text>
           </View>
         </View>
@@ -48,16 +48,15 @@ class MuseumPage extends Component {
       <View style={styles.carouselContainer}>
         <Carousel/>
         </View>
-        <ScrollView>
+        <ScrollView style={{flexGrow: 1}}>
         <View style={styles.postsHeaderContainer}>
           <Text style={styles.postsHeader}>
             Most Active Pieces
           </Text>
         </View>
-        
-          <View style={styles.postContainer}>
+        <View style={styles.postContainer}>
           {this.topPieces}
-          </View>
+        </View>
         </ScrollView>
         </View>
     )
@@ -66,7 +65,8 @@ class MuseumPage extends Component {
 
 const styles = StyleSheet.create({
   masterView: {
-    backgroundColor: 'cornsilk'
+    backgroundColor: 'cornsilk',
+    flex: 1
   },
   imageStyle: {
     maxHeight: 25,
