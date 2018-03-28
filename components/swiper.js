@@ -34,7 +34,7 @@ export default class FakeCam extends React.Component {
           showsPagination={true}
           index={1}>
           <View style={this.viewStyle()}>
-            <MuseumPage />
+            <MuseumPage navigation={this.props.navigation} />
           </View>
             <View >
               <OCR navigation={this.props.navigation} />

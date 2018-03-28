@@ -18,7 +18,8 @@ const topPieces = (pieces) => {
 
 export const getMuseumNearMe = (latitude, longitude) =>
   dispatch => {
-    axios.get(`${backEndAddress}/api/museums/location/?latitude=${latitude}&longitude=${longitude}`)
+    return axios.get(`${backEndAddress}/api/museums/location/?latitude=${latitude}&longitude=${longitude}`)
+    .then(res => res.data)
     .then(museum => dispatch(stockMuseum(museum)))
   }
 

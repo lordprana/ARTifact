@@ -1,36 +1,48 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {View, ScrollView, StyleSheet, Text, Image} from 'react-native'
-import { getMuseumNearMe } from '../store/museum';
-import { fetchTopPieces } from '../store/museum'
+import { View, ScrollView, StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
+import { NavigationActions } from 'react-navigation';
+import { getMuseumNearMe, fetchTopPieces, getPosts, stockPiece } from '../store';
 import Carousel from './Carousel'
 
 class MuseumPage extends Component {
   constructor(props){
     super(props)
+    this.handlePiecePress = this.handlePiecePress.bind(this);
   }
 
   componentDidMount(){
-    this.props.fetchTopPieces(1)
+    this.props.fetchTopPieces(this.props.museum.id)
+  }
+
+  handlePiecePress = (piece) => () => {
+    this.props.stockPosts(piece.posts);
+    delete piece.posts;
+    this.props.stockPiece(piece);
+    this.props.navigation.navigate('AllPosts');
   }
 
   get topPieces() {
     if (!this.props.pieces) return null
-    return this.props.pieces.map(piece =>
-      <View key={piece.id} style={styles.postView}>
-        <Text style={styles.pieceName}>{piece && piece.name}</Text>
-        <View style={styles.imageAndContent}>
-        <Image style={styles.image} source = {{uri: (piece.pictureUrl)}}/>
-        <Text style={styles.textContent}>{piece.posts[0].content.slice(0, 95) + ' ...'}</Text>
+    return this.props.pieces.map(piece => (
+      <TouchableOpacity onPress={this.handlePiecePress(piece)}>
+        <View key={piece.id} style={styles.postView}>
+          <Text style={styles.pieceName}>{piece && piece.name}</Text>
+          <View style={styles.imageAndContent}>
+            <Image
+              style={styles.image}
+              source={{ uri: piece.pictureUrl }}
+            />
+            <Text style={styles.textContent}>
+              {piece.posts[0].content.slice(0, 95) + " ..."}
+            </Text>
+          </View>
         </View>
-      </View>)
+      </TouchableOpacity>
+    ));
   }
-//   <View key={piece.id} style={styles.postView}>
-//   <Text style={styles.textContent}>{piece.posts[0] && piece.posts[0].content}</Text>
-// </View>)
 
   render() {
-    //console.log(this.props.pieces)
     return (
       <View style={styles.masterView}>
       <View style={styles.carouselContainer}>
@@ -103,16 +115,20 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center'
-    // borderWidth:3,
-    // borderColor:'black',
-    // paddingRight: 10
   }
 })
 
 mapStateToProps = state => ({
   pieces: state.museum.pieces,
-  museum: state.museum,
+  museum: state.museum.museum,
+})
+
+mapDispatchToProps = dispatch => ({
+  getMuseumNearMe: (latitude, longitude) => dispatch(getMuseumNearMe(latitude, longitude)),
+  fetchTopPieces: museumId => dispatch(fetchTopPieces(museumId)),
+  stockPosts: posts => dispatch(getPosts(posts)),
+  stockPiece: piece => dispatch(stockPiece(piece))
 })
 
 
-export default connect(mapStateToProps, {getMuseumNearMe, fetchTopPieces})(MuseumPage)
+export default connect(mapStateToProps, mapDispatchToProps)(MuseumPage)
