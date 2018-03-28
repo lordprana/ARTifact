@@ -48,12 +48,13 @@ class MuseumPage extends Component {
       <View style={styles.carouselContainer}>
         <Carousel/>
         </View>
+        <ScrollView>
         <View style={styles.postsHeaderContainer}>
           <Text style={styles.postsHeader}>
             Most Active Pieces
           </Text>
         </View>
-        <ScrollView>
+        
           <View style={styles.postContainer}>
           {this.topPieces}
           </View>
@@ -106,8 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   postsHeader: {
-    fontSize: 20,
-    fontFamily: 'Georgia'
+    fontSize: 20
   },
   image: {
     width: 75,
