@@ -31,7 +31,7 @@ const UserPage = props => {
       </View>
       <Text style={styles.userPageSubtitle}>Recommnded works</Text>
       <Text style={styles.userPageSubtitle}>Saved works</Text>
-      {props.savedPieces.map(piece => (
+      {props.savedPieces && props.savedPieces.map(piece => (
           <Pieces key={piece.id} piece={piece} />
         )
       )}
