@@ -9,7 +9,6 @@ import { backEndAddress } from '../config';
 
 const handlePiecePress = (stockPosts, stockPiece, piece, navigation) => () => {
   stockPosts(piece.posts);
-  delete piece.posts;
   stockPiece(piece);
   navigation.dispatch(
     NavigationActions.reset(

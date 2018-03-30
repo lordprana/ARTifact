@@ -66,7 +66,6 @@ class AllPosts extends React.Component {
   }
 
   handleFavoriteTouch() {
-    console.log('HANDLE TOUCH');
     if (this.state.favorited) this.props.deleteSavedPiece(this.props.piece);
     else this.props.postSavedPiece(this.props.piece);
 
@@ -78,6 +77,11 @@ class AllPosts extends React.Component {
   render() {
     return (
       <View style={styles.view}>
+      <View style={styles.backButton}>
+        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+          <Image source={require('../resources/icons/back-arrow-button.png')}/>
+        </TouchableOpacity>
+      </View>
         <View style={styles.heartTouchable}>
           <TouchableWithoutFeedback onPress={() => this.handleFavoriteTouch()}>
             {
@@ -148,6 +152,12 @@ const styles = StyleSheet.create({
     view: {
         marginTop: 25,
         flex: 1,
+    },
+    backButton: {
+      position: 'absolute',
+      top: 5,
+      left: 10,
+      zIndex: 1
     },
     pieceName: {
         fontSize: 25,

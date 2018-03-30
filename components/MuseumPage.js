@@ -17,7 +17,6 @@ class MuseumPage extends Component {
 
   handlePiecePress = (piece) => () => {
     this.props.stockPosts(piece.posts);
-    delete piece.posts;
     this.props.stockPiece(piece);
     this.props.navigation.navigate('AllPosts');
   }
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
   carouselContainer : {
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: '#085D00'
+    backgroundColor: '#81DAF5'
   },
   postContainer: {
     backgroundColor: 'cornsilk',
