@@ -52,7 +52,7 @@ const Pieces = props => (
               source={{ uri: props.piece.pictureUrl }}
             />
             <Text style={museumStyles.textContent}>
-              {props.piece.posts && props.piece.posts.length && props.piece.posts[0].content.slice(0, 95) + (props.piece.posts[0].content.length > 95 ? " ..." : '')}
+              {(props.piece.posts && !!props.piece.posts.length) && props.piece.posts[0].content.slice(0, 95) + (props.piece.posts[0].content.length > 95 ? " ..." : '')}
             </Text>
           </View>
         </View>
@@ -109,7 +109,7 @@ class UserPage extends React.Component {
 
 const museumStyles = StyleSheet.create({
   masterView: {
-    backgroundColor: 'cornsilk',
+    // backgroundColor: 'cornsilk',
     flex: 1,
     paddingBottom: 40
   },
@@ -124,7 +124,7 @@ const museumStyles = StyleSheet.create({
     backgroundColor: '#085D00'
   },
   postContainer: {
-    backgroundColor: 'cornsilk',
+    // backgroundColor: 'cornsilk',
   },
   pieceName: {
     fontSize: 18,

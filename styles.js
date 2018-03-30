@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#085D00',
+    backgroundColor: '#6772e5',
   },
   userName: {
     color: 'white',
