@@ -33,7 +33,7 @@ class MuseumPage extends Component {
               source={{ uri: piece.pictureUrl }}
             />
             <Text style={styles.textContent}>
-              { piece.posts && piece.posts.length && piece.posts[0].content.slice(0, 95) + " ..."}
+              {(piece.posts && !!piece.posts.length) && piece.posts[0].content.slice(0, 95) + (piece.posts[0].content.length > 95 ? " ..." : '')}
             </Text>
           </View>
         </View>
@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   postsHeader: {
-    fontSize: 20
+    fontSize: 20,
+    fontWeight: 'bold'
   },
   image: {
     width: 75,
