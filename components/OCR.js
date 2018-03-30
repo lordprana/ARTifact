@@ -19,6 +19,7 @@ class OCR extends React.Component {
     this.state = {
       hasCameraPermission: null,
       type: Camera.Constants.Type.back,
+      ratio: '16:9',
     };
 
     this.camera = null;
@@ -54,7 +55,6 @@ class OCR extends React.Component {
           });
         })
         .then(res => {
-          console.log(res.data);
           if (res.data.length > 1){
             this.props.navigation.dispatch(
               NavigationActions.reset(
@@ -141,7 +141,7 @@ class OCR extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Camera style={styles.ocrCamera} type={this.state.type} ref={ref => {this.camera = ref;}} >
+          <Camera style={styles.ocrCamera} type={this.state.type} ratio={this.state.ratio} ref={ref => {this.camera = ref;}} >
             <Text style={styles.ocrText}>
               Take a picture of the art plaque to join the conversation about the piece
             </Text>

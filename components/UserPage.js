@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View, Image, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { getSavedPieces, stockPiece, getPosts } from '../store';
 import styles from '../styles';
@@ -33,7 +33,7 @@ const handlePiecePress = (stockPosts, stockPiece, piece, navigation) => () => {
 
 const Pieces = props => (
   <TouchableOpacity onPress={handlePiecePress(props.stockPosts, props.stockPiece, props.piece, props.navigation)}>
-    <View style={styles.savedPiece}>
+    {/* <View style={styles.savedPiece}>
       <View style={styles.savedPieceSeparator}>
         <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/1/17/Rhinos_Chauvet_Cave.jpg' }} style={styles.savedPiecePic} />
         <View style={styles.savedPieceTextContainer}>
@@ -43,7 +43,19 @@ const Pieces = props => (
         </View>
       </View>
       <Image source={require('../resources/icons/right-arrow.png')} style={styles.tempArrow} />
-    </View>
+    </View> */}
+    <View  style={museumStyles.postView}>
+          <Text style={museumStyles.pieceName}>{props.piece && `${props.piece.name} - ${props.piece.artist.name}`}</Text>
+          <View style={museumStyles.imageAndContent}>
+            <Image
+              style={museumStyles.image}
+              source={{ uri: props.piece.pictureUrl }}
+            />
+            <Text style={museumStyles.textContent}>
+              {props.piece.posts && props.piece.posts.length && props.piece.posts[0].content.slice(0, 95) + (props.piece.posts[0].content.length > 95 ? " ..." : '')}
+            </Text>
+          </View>
+        </View>
   </TouchableOpacity>
 );
 
@@ -64,7 +76,7 @@ class UserPage extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={museumStyles.masterView}>
         <View style={styles.userHeader}>
           <Text style={styles.userName}>{this.props.name}</Text>
           <Image source={{ uri: this.props.pictureUrl }} style={styles.profilePic} />
@@ -94,6 +106,63 @@ class UserPage extends React.Component {
     );
   }
 }
+
+const museumStyles = StyleSheet.create({
+  masterView: {
+    backgroundColor: 'cornsilk',
+    flex: 1,
+    paddingBottom: 40
+  },
+  imageStyle: {
+    maxHeight: 25,
+    maxWidth: 40,
+    flex: 1
+  },
+  carouselContainer: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    backgroundColor: '#085D00'
+  },
+  postContainer: {
+    backgroundColor: 'cornsilk',
+  },
+  pieceName: {
+    fontSize: 18,
+    // fontWeight: 'bold',
+    marginBottom: 6
+  },
+  imageAndContent: {
+    flexDirection: 'row'
+  },
+  textContent: {
+    fontSize: 15,
+    marginLeft: 15,
+    flex: 1
+  },
+  postView: {
+    borderBottomWidth: 1,
+    borderColor: 'black',
+    margin: 5,
+    padding: 10
+  },
+  postsHeaderContainer: {
+    marginTop: 10,
+    backgroundColor: 'cornsilk',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  postsHeader: {
+    fontSize: 20
+  },
+  image: {
+    width: 75,
+    height: 75,
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
 
 const mapState = state => ({
   name: state.user.name,
