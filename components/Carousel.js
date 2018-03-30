@@ -6,17 +6,31 @@ const { width } = Dimensions.get('window');
 const height = width * 0.7;
 
 class Carousel extends Component {
+  constructor() {
+    super()
+    this.state = {
+      visibleSwiper: false
+    }
+  }
+
+  componentDidMount() {
+    setTimeout(() => { // This is used to fix react-native-swiper in android bug
+      this.setState({ visibleSwiper: true });
+    }, 0);
+  }
+
   render() {
       return <View style={styles.scrollContainer}>
-          <Swiper 
-          horizontal 
-          pagingEnabled = {true}
-          showsHorizontalScrollIndicator={false} 
-          autoplay={true}
-          autoplayTimeout= {7}
-          loop={true}
-          showsPagination={false}
-          >
+          { this.state.visibleSwiper &&
+            <Swiper
+              horizontal
+              pagingEnabled={true}
+              showsHorizontalScrollIndicator={false}
+              autoplay={true}
+              autoplayTimeout={7}
+              loop={true}
+              showsPagination={false}
+            >
               <View style={styles.singleView}>
                 <Image style={styles.image} source={require("../resources/images/Whitney-Deck-View.jpg")} />
               </View>
@@ -32,18 +46,21 @@ class Carousel extends Component {
               <View style={styles.singleView}>
                 <Image style={styles.image} source={require("../resources/images/Whitney-Exterior.jpg")} />
               </View>
-          </Swiper>
-        </View>;   
+            </Swiper>
+          }
+        </View>;
   }
 }
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    height
+    height,
+    width
   },
   singleView: {
     paddingLeft: width*.05 ,
     paddingRight: width*.05,
+    flex: 1,
   },
   imageView: {
     flexWrap: 'wrap',
@@ -55,7 +72,7 @@ const styles = StyleSheet.create({
     height,
     borderWidth:3,
     borderColor:'black',
-    paddingRight: 10
+    paddingRight: 10,
   },
 });
 
