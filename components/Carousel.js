@@ -40,12 +40,6 @@ class Carousel extends Component {
               <View style={styles.singleView}>
                 <Image style={styles.image} source={require("../resources/images/Whitney-Exhibition.jpg")} />
               </View>
-              {/* <View style={styles.singleView}>
-                <Image style={styles.image} source={require("../resources/images/Whitney-Deck-View-2.jpg")} />
-              </View> */}
-              {/* <View style={styles.singleView}>
-                <Image style={styles.image} source={require("../resources/images/Whitney-Exterior.jpg")} />
-              </View> */}
             </Swiper>
           }
         </View>;
