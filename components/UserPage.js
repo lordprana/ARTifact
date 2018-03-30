@@ -33,17 +33,6 @@ const handlePiecePress = (stockPosts, stockPiece, piece, navigation) => () => {
 
 const Pieces = props => (
   <TouchableOpacity onPress={handlePiecePress(props.stockPosts, props.stockPiece, props.piece, props.navigation)}>
-    {/* <View style={styles.savedPiece}>
-      <View style={styles.savedPieceSeparator}>
-        <Image source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/1/17/Rhinos_Chauvet_Cave.jpg' }} style={styles.savedPiecePic} />
-        <View style={styles.savedPieceTextContainer}>
-          <Text style={styles.savedPieceTitle}>{props.piece.name}</Text>
-          <Text style={styles.savedPieceText}>Artist Name</Text>
-          <Text style={styles.savedPieceText}>{props.piece.year}</Text>
-        </View>
-      </View>
-      <Image source={require('../resources/icons/right-arrow.png')} style={styles.tempArrow} />
-    </View> */}
     <View  style={museumStyles.postView}>
           <Text style={museumStyles.pieceName}>{props.piece && `${props.piece.name} - ${props.piece.artist.name}`}</Text>
           <View style={museumStyles.imageAndContent}>
