@@ -66,7 +66,6 @@ class AllPosts extends React.Component {
   }
 
   handleFavoriteTouch() {
-    console.log('HANDLE TOUCH', this.props.piece);
     if (this.state.favorited) this.props.deleteSavedPiece(this.props.piece);
     else this.props.postSavedPiece(this.props.piece);
 
