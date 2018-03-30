@@ -32,20 +32,20 @@ class Carousel extends Component {
               showsPagination={false}
             >
               <View style={styles.singleView}>
-                <Image style={styles.image} source={require("../resources/images/Whitney-Deck-View.jpg")} />
+                <Image style={styles.image} source={require("../resources/images/Whitney-Logo.jpg")} />
               </View>
               <View style={styles.singleView}>
-                <Image style={styles.image} source={require("../resources/images/Whitney-Logo.jpg")} />
+                <Image style={styles.image} source={require("../resources/images/Whitney-Deck-View.jpg")} />
               </View>
               <View style={styles.singleView}>
                 <Image style={styles.image} source={require("../resources/images/Whitney-Exhibition.jpg")} />
               </View>
-              <View style={styles.singleView}>
+              {/* <View style={styles.singleView}>
                 <Image style={styles.image} source={require("../resources/images/Whitney-Deck-View-2.jpg")} />
-              </View>
-              <View style={styles.singleView}>
+              </View> */}
+              {/* <View style={styles.singleView}>
                 <Image style={styles.image} source={require("../resources/images/Whitney-Exterior.jpg")} />
-              </View>
+              </View> */}
             </Swiper>
           }
         </View>;

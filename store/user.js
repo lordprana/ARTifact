@@ -39,7 +39,7 @@ export const postSavedPiece = piece =>
     if (!hasHeaders()) return console.error('auth header not set');
     axios.post(`${backEndAddress}/api/users/add-piece`, piece)
   .then(res => res.data)
-  .then(pieceInDb => dispatch(addPiece(pieceInDb)));
+  .then(pieceInDb => dispatch(addPiece(piece)));
   };
 
 export const deleteSavedPiece = piece =>
