@@ -13,7 +13,7 @@ import { getMuseumNearMe } from '../store/museum';
 
 const LoginScreen = (props) => {
   return (
-    <BackgroundImage image={require('../londonMuseum.jpg')}>
+    <BackgroundImage image={require('../resources/images/london-museum.png')}>
       <View style={styles.container}>
         <Text style={styles.titleText}>Welcome to ARTifact</Text>
         {
@@ -76,7 +76,7 @@ class Auth extends React.Component {
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
-        require('../londonMuseum.jpg'),
+        require('../resources/images/london-museum.png'),
       ])
     ]);
   }
