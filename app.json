@@ -11,6 +11,6 @@
       "resizeMode": "cover"
     },
     "icon": "./resources/icons/ARTifact-icon.png",
-    "description": "ARTifact allows users to add their voice to museum exhibitions."
+    "description": "ARTifact lets users add their voice to museum exhibitions."
   }
 }
