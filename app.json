@@ -10,6 +10,7 @@
       "image": "./resources/images/london-museum.png",
       "resizeMode": "cover"
     },
-    "description": "ARTifact offers users the opportunity to add their voices to a museum exhibitions."
+    "icon": "./resources/icons/ARTifact-icon.png",
+    "description": "ARTifact allows users to add their voice to museum exhibitions."
   }
 }
